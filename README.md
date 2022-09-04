@@ -1,2 +1,3 @@
-# 2022-08-otus-spring-shchiptsova
-Homeworks for spring developers course
+Репозиторий с домашними работами Щипцовой Натальи
+Курс разработчик на Spring Framework 2022-08
+-spring-01 содержит домшнюю работу с занаию Введение в Spring Framework 
