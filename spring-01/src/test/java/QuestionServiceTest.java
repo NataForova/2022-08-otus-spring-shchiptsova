@@ -25,7 +25,7 @@ public class QuestionServiceTest {
     public void testGetQuestions() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         QuestionService questionService = context.getBean(QuestionService.class);
-        assertEquals(5, questionService.getQuestions().size());
+        assertEquals(5, questionService.getStringQuestions().size());
     }
 
 }
