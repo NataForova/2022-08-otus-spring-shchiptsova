@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.domain.QuestionConverter;
+import ru.otus.spring.exceptions.CsvFormatConvertException;
+import ru.otus.spring.exceptions.IncorrectAnswerException;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,16 +15,16 @@ import java.util.List;
 public class ApplicationRunner {
     private final IOQuestionService ioQuestionService;
     private final QuestionDao questionDao;
-    private final AnswerProcessor answerProcessor;
+    private final AnswerProcessorService answerProcessorService;
     private final ResultService resultService;
     private final TestingStopService testingStopService;
     @Autowired
     public ApplicationRunner(IOQuestionService ioQuestionService, QuestionDao questionDao,
-                             AnswerProcessor answerProcessor, ResultService resultService,
+                             AnswerProcessorService answerProcessorService, ResultService resultService,
                              TestingStopService testingStopService) {
         this.ioQuestionService = ioQuestionService;
         this.questionDao = questionDao;
-        this.answerProcessor = answerProcessor;
+        this.answerProcessorService = answerProcessorService;
         this.resultService = resultService;
         this.testingStopService = testingStopService;
     }
@@ -30,13 +33,15 @@ public class ApplicationRunner {
         while (testingStopService.isTestingRunning()) {
             try {
                 runStudentTesting();
-            } catch (IOException e) {
+            } catch (CsvFormatConvertException e) {
                 ioQuestionService.printResult("We have problem with the test file. Please tell this information to a teacher");
+            } catch (IncorrectAnswerException e) {
+                ioQuestionService.printResult(e.getMessage());
             }
         }
     }
 
-    private void runStudentTesting() throws IOException {
+    private void runStudentTesting() throws IncorrectAnswerException, CsvFormatConvertException {
         ioQuestionService.printResult("Welcome to the students test! \nWhat is your name?\n");
         String studentName = ioQuestionService.readStudentName();
 
@@ -45,12 +50,12 @@ public class ApplicationRunner {
         for (Question question : questions) {
             ioQuestionService.printQuestion(question);
             String answer = ioQuestionService.readAnswer();
-            answerProcessor.checkAnswer(question, answer);
+            answerProcessorService.checkAnswer(question, answer);
         }
 
-        Integer totalStudentScore = answerProcessor.getScore();
+        Integer totalStudentScore = answerProcessorService.getScore();
         ioQuestionService.printResult(studentName +  " your score = " + totalStudentScore + "\n");
         testingStopService.stopTesting(resultService.checkPassed(totalStudentScore));
-        answerProcessor.resetScore();
+        answerProcessorService.resetScore();
     }
 }
