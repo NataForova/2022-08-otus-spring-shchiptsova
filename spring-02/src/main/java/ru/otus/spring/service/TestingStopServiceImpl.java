@@ -24,9 +24,7 @@ public class TestingStopServiceImpl implements TestingStopService {
         if (!isTestPassed) {
             ioQuestionService.printResult("Do you want to try one more time? y/n \n");
             String answer = ioQuestionService.readAnswer();
-            if (answer.equalsIgnoreCase("y")) {
-                this.isTestingRunning = true;
-            }
+            this.isTestingRunning = answer.equalsIgnoreCase("y");
         } else {
             this.isTestingRunning = false;
         }

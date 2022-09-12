@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ResultServiceImpl implements ResultService {
-    @Value("${questions.min.score}")
-    private Integer minScore;
+    private final Integer minScore;
     private final IOQuestionService ioQuestionService;
 
-    public ResultServiceImpl(IOQuestionService ioQuestionService) {
+    public ResultServiceImpl(IOQuestionService ioQuestionService, @Value("${questions.min.score}") Integer minScore) {
         this.ioQuestionService = ioQuestionService;
+        this.minScore = minScore;
     }
 
     @Override
