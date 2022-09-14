@@ -1,15 +1,18 @@
-package ru.otus.spring.domain;
+package ru.otus.spring.service;
 
+import org.springframework.stereotype.Component;
+import ru.otus.spring.domain.Question;
 import ru.otus.spring.exceptions.CsvFormatConvertException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class QuestionConverter {
+@Component
+public class QuestionConverter implements CvsConverter<Question> {
 
-    public static List<Question> convertCvsToQuestionList(List<String> cvsStringList) throws CsvFormatConvertException {
+    @Override
+    public List<Question> convertCvsToQuestionList(List<String> cvsStringList) throws CsvFormatConvertException {
         List<Question> questionList = new ArrayList<>();
         for (String cvsString : cvsStringList) {
             questionList.add(convertCvsToQuestion(cvsString));
@@ -17,7 +20,8 @@ public class QuestionConverter {
         return questionList;
     }
 
-    public static Question convertCvsToQuestion(String cvsString) throws CsvFormatConvertException {
+    @Override
+    public Question convertCvsToQuestion(String cvsString) throws CsvFormatConvertException {
         List<String> list = Arrays.asList(cvsString.split(","));
         if (list.size() < 2) {
             throw new CsvFormatConvertException("Wrong question file format");
