@@ -1,7 +1,9 @@
 package ru.otus.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
+import ru.otus.spring.config.ApplicationConfig;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.exceptions.IncorrectAnswerException;
 
@@ -10,21 +12,23 @@ public class AnswerProcessorServiceImpl implements AnswerProcessorService {
 
     private Integer score;
     private final IOQuestionService ioQuestionService;
+    private final TestingAppMessenger testingAppMessenger;
 
     @Autowired
-    public AnswerProcessorServiceImpl(IOQuestionService ioQuestionService) {
+    public AnswerProcessorServiceImpl(IOQuestionService ioQuestionService, TestingAppMessenger testingAppMessenger) {
         this.score = 0;
         this.ioQuestionService = ioQuestionService;
+        this.testingAppMessenger = testingAppMessenger;
     }
 
     @Override
     public boolean checkAnswer(Question question, String answer) throws IncorrectAnswerException {
         if (getBareAnswer(question.getRightAnswer()).equals(getBareAnswer(answer))) {
             score++;
-            ioQuestionService.printResult("Right! \n");
+            ioQuestionService.printResult(testingAppMessenger.getMessage("right.answer"));
             return true;
         }
-        ioQuestionService.printResult("Wrong :( \n");
+        ioQuestionService.printResult(testingAppMessenger.getMessage("wrong.answer"));
         return false;
     }
 
@@ -42,7 +46,7 @@ public class AnswerProcessorServiceImpl implements AnswerProcessorService {
         if (answer != null) {
             return answer.trim().toLowerCase();
         } else {
-            throw new IncorrectAnswerException("Answer can't be null");
+            throw new IncorrectAnswerException(testingAppMessenger.getMessage("answer.is.null.error"));
         }
     }
 }

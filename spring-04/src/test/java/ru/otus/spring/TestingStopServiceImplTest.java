@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.spring.service.IOQuestionService;
+import ru.otus.spring.service.TestingAppMessenger;
 import ru.otus.spring.service.TestingStopServiceImpl;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -15,10 +16,12 @@ import static org.mockito.Mockito.mock;
 public class TestingStopServiceImplTest {
     @Mock
     IOQuestionService ioQuestionService;
+    @Mock
+    TestingAppMessenger testingAppMessenger;
 
     @Test
     void stopTestingWhenTestPassesIsTrue() {
-        TestingStopServiceImpl testingStopService = new TestingStopServiceImpl(ioQuestionService);
+        TestingStopServiceImpl testingStopService = new TestingStopServiceImpl(ioQuestionService, testingAppMessenger);
         testingStopService.stopTesting(true);
         assertThat(testingStopService.isTestingRunning()).isFalse();
     }
@@ -26,7 +29,7 @@ public class TestingStopServiceImplTest {
     @Test
     void stopTestingWhenTestNotPassesIsFalseAndUserAnswerYes() {
         given(ioQuestionService.readAnswer()).willReturn("y");
-        TestingStopServiceImpl testingStopService = new TestingStopServiceImpl(ioQuestionService);
+        TestingStopServiceImpl testingStopService = new TestingStopServiceImpl(ioQuestionService, testingAppMessenger);
         testingStopService.stopTesting(false);
         assertThat(testingStopService.isTestingRunning()).isTrue();
     }
@@ -34,7 +37,7 @@ public class TestingStopServiceImplTest {
     @Test
     void stopTestingWhenTestNotPassesIsFalseAndUserAnswerNo() {
         given(ioQuestionService.readAnswer()).willReturn("n");
-        TestingStopServiceImpl testingStopService = new TestingStopServiceImpl(ioQuestionService);
+        TestingStopServiceImpl testingStopService = new TestingStopServiceImpl(ioQuestionService, testingAppMessenger);
         testingStopService.stopTesting(false);
         assertThat(testingStopService.isTestingRunning()).isFalse();
     }

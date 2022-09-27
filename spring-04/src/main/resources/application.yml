@@ -1,0 +1,14 @@
+spring:
+  messages:
+    basename: "i18n/appmessages"
+    encoding: "UTF-8"
+
+questions:
+  resource:
+    file : "questions.csv"
+  min:
+    score: 5
+
+application:
+  message: "Test Props msg"
+  locale: ru_RU

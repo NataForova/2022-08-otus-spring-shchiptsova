@@ -1,6 +1,5 @@
 package ru.otus.spring.service;
 
-import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Question;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -12,8 +11,8 @@ public class IOQuestionServiceImpl implements IOQuestionService{
     private final PrintStream outputStream;
 
     public IOQuestionServiceImpl(InputStream inputStream, PrintStream outputStream) {
-        this.scanner = new Scanner(System.in);
-        this.outputStream = System.out;
+        this.scanner = new Scanner(inputStream);
+        this.outputStream = outputStream;
     }
 
     @Override
