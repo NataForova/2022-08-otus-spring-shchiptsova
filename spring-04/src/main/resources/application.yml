@@ -5,7 +5,9 @@ spring:
 
 questions:
   resource:
-    file : "questions.csv"
+    file :
+      en : "questions.csv"
+      ru: "questions_ru.csv"
   min:
     score: 5
 
