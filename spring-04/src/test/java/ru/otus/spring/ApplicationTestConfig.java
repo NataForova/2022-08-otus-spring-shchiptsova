@@ -1,9 +1,7 @@
 package ru.otus.spring;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.test.context.TestConfiguration;
 
-@Configuration
-@PropertySource("classpath:test.properties")
+@TestConfiguration(value = "application-test")
 public class ApplicationTestConfig {
 }
