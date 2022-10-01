@@ -1,9 +1,7 @@
 package ru.otus.spring.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import ru.otus.spring.config.ApplicationConfig;
 import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.exceptions.CsvFormatConvertException;
@@ -12,7 +10,7 @@ import ru.otus.spring.exceptions.IncorrectAnswerException;
 import java.util.List;
 
 @Component
-public class StudentsTestApplication implements ApplicationRunner {
+public class StudentsTestApplication implements CommandLineRunner {
     private final IOQuestionService ioQuestionService;
     private final QuestionDao questionDao;
     private final AnswerProcessorService answerProcessorService;
@@ -21,7 +19,6 @@ public class StudentsTestApplication implements ApplicationRunner {
     private final QuestionConverter converter;
     private final TestingAppMessenger testingAppMessenger;
 
-    @Autowired
     public StudentsTestApplication(IOQuestionService ioQuestionService, QuestionDao questionDao,
                                    AnswerProcessorService answerProcessorService, ResultService resultService,
                                    TestingStopService testingStopService, QuestionConverter questionConverter,
@@ -35,7 +32,8 @@ public class StudentsTestApplication implements ApplicationRunner {
         this.testingAppMessenger = testingAppMessenger;
     }
 
-    public void run()  {
+    @Override
+    public void run(String... args)  {
         while (testingStopService.isTestingRunning()) {
             try {
                 runStudentTesting();

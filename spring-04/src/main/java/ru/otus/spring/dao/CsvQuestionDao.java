@@ -10,16 +10,15 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Component
 public class CsvQuestionDao implements QuestionDao {
-    @Value("${questions.resource.file.en}")
-    private String questionResource;
 
-    @Value("${questions.resource.file.ru}")
-    private String questionResourceRu;
+    private final static String DEFAULT_LOCALE_NAME = "ru_RU";
+
+    @Value("${questions.resource.file.mask}")
+    private String questionResourceMask;
 
     private final ApplicationConfig applicationConfig;
 
@@ -30,8 +29,12 @@ public class CsvQuestionDao implements QuestionDao {
 
     @Override
     public List<String> getQuestions() {
-        InputStream in = SpringBootApplicationMain.class.getClassLoader().getResourceAsStream(!applicationConfig.getLocale().equals(Locale.ENGLISH) ?
-                this.questionResourceRu : this.questionResource);
+        String localeName = applicationConfig.getLocale().toString();
+
+        InputStream in = SpringBootApplicationMain.class.getClassLoader().getResourceAsStream(questionResourceMask.replace("*", localeName));
+        if (in == null) {
+            in = SpringBootApplicationMain.class.getClassLoader().getResourceAsStream(questionResourceMask.replace("*", DEFAULT_LOCALE_NAME));
+        }
         return new BufferedReader(new InputStreamReader(in))
                 .lines()
                 .collect(Collectors.toList());

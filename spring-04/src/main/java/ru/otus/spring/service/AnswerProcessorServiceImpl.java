@@ -1,9 +1,6 @@
 package ru.otus.spring.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-import ru.otus.spring.config.ApplicationConfig;
 import ru.otus.spring.domain.Question;
 import ru.otus.spring.exceptions.IncorrectAnswerException;
 
@@ -14,7 +11,6 @@ public class AnswerProcessorServiceImpl implements AnswerProcessorService {
     private final IOQuestionService ioQuestionService;
     private final TestingAppMessenger testingAppMessenger;
 
-    @Autowired
     public AnswerProcessorServiceImpl(IOQuestionService ioQuestionService, TestingAppMessenger testingAppMessenger) {
         this.score = 0;
         this.ioQuestionService = ioQuestionService;

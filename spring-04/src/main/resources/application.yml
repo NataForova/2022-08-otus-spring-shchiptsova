@@ -6,11 +6,9 @@ spring:
 questions:
   resource:
     file :
-      en : "questions.csv"
-      ru: "questions_ru.csv"
+      mask: "questions_*.csv"
   min:
     score: 5
 
 application:
-  message: "Test Props msg"
   locale: ru_RU
