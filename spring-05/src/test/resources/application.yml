@@ -2,15 +2,16 @@ spring:
   messages:
     basename: "i18n/appmessages"
     encoding: "UTF-8"
+  shell:
+    interactive:
+      enabled: false
 
 questions:
   resource:
     file :
-      en : "questions_en.csv"
-      ru: "questions_ru_RU.csv"
+      mask: "questions_*.csv"
   min:
     score: 5
 
 application:
-  message: "Test Props msg"
-  locale: ru_RU
+  locale: en

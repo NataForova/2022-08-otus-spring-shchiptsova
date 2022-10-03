@@ -1,6 +1,5 @@
 package ru.otus.spring.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,6 @@ public class TestingAppMessenger implements AppMessenger {
     private final MessageSource messageSource;
     private final ApplicationConfig applicationConfig;
 
-    @Autowired
     public TestingAppMessenger(MessageSource messageSource, ApplicationConfig applicationConfig) {
         this.messageSource = messageSource;
         this.applicationConfig = applicationConfig;

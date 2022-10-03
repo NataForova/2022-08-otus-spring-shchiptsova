@@ -34,9 +34,10 @@ public class StudentsTestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args)  {
+        String name = args.length != 0 ? args[0] : "";
         while (testingStopService.isTestingRunning()) {
             try {
-                runStudentTesting(args[0]);
+                runStudentTesting(name);
             } catch (CsvFormatConvertException e) {
                 ioQuestionService.printResult(testingAppMessenger.getMessage("question.file.problem"));
             } catch (IncorrectAnswerException e) {
@@ -47,7 +48,11 @@ public class StudentsTestApplication implements CommandLineRunner {
 
     private void runStudentTesting(String name) throws IncorrectAnswerException, CsvFormatConvertException {
         String studentName = name;
-        ioQuestionService.printResult(testingAppMessenger.getMessage("greeting", studentName.split(" ")));
+        if (studentName.isEmpty()) {
+            ioQuestionService.printResult(testingAppMessenger.getMessage("ask.name"));
+            studentName = ioQuestionService.readStudentName();
+        }
+        ioQuestionService.printResult(testingAppMessenger.getMessage("greeting", new String[] {studentName}));
 
         List<Question> questions = converter.convertCvsToQuestionList(questionDao.getQuestions());
 

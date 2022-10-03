@@ -1,4 +1,4 @@
-package ru.otus.spring;
+package ru.otus.spring.test;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

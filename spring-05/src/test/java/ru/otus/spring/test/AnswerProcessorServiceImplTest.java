@@ -1,4 +1,4 @@
-package ru.otus.spring;
+package ru.otus.spring.test;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
