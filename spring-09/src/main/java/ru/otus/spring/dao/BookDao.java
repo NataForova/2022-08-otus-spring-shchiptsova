@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface BookDao {
     int count();
-    void insert(Book person);
-    Book getById(long id);
+    public int insert(String bookName, int authorId, int genreId);
+    Book getById(int id);
     List<Book> getAll();
     Book update(Book person);
     void deleteById(long id);
