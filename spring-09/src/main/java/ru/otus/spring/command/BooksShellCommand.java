@@ -29,7 +29,26 @@ public class BooksShellCommand implements ApplicationCommand {
     @Override
     @ShellMethod(value = "Get book", key = {"getBook", "getBook"})
     public String getBookById(int bookId) {
-        Book book = bookDao.getById(bookId);
         return bookDao.getById(bookId).toString();
     }
+
+    @Override
+    @ShellMethod(value = "delete book", key = {"del", "deleteBook"})
+    public void deleteBook(int bookId) {
+        bookDao.deleteById(bookId);
+    }
+
+    @Override
+    @ShellMethod(value = "get all books", key = {"getAll", "getAllBooks"})
+    public String getAllBooks() {
+        return bookDao.getAll().toString();
+    }
+
+    @Override
+    @ShellMethod(value = "update book", key = {"update", "update"})
+    public int updateBook(long id, String name, long author_id, long genre_id){
+        return bookDao.update(id, name, author_id, genre_id);
+    }
+
+
 }

@@ -9,8 +9,16 @@ import lombok.RequiredArgsConstructor;
 public class Book {
     private Long id;
     private String name;
-    private int author_id;
-    private int genre_id;
-    //private Author author;
-    //private Genre genre;
+    private Author author;
+    private Genre genre;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author=" + author.toString() +
+                ", genre=" + genre.toString() +
+                "}\n";
+    }
 }
