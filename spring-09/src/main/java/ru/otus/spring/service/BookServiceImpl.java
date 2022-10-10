@@ -37,7 +37,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getBookByGenreId(int genreId) {
-        return null;
+        return bookDao.getByGenreId(genreId);
     }
 
     @Override
