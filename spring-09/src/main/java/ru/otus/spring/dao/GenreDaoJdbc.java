@@ -58,7 +58,7 @@ public class GenreDaoJdbc implements GenreDao {
         namedParameters.put("id", genre.getId());
         namedParameters.put("name", genre.getName());
 
-        return namedParameterJdbcTemplate.update("update genres set name = :name where id = :id)",
+        return namedParameterJdbcTemplate.update("update genres set name = :name where id = :id",
                 namedParameters);
     }
 

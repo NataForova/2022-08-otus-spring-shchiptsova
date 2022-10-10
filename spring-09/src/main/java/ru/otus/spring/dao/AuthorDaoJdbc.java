@@ -58,7 +58,7 @@ public class AuthorDaoJdbc implements AuthorDao {
         namedParameters.put("id", author.getId());
         namedParameters.put("name", author.getName());
 
-        return namedParameterJdbcTemplate.update("update authors set name = :name where id = :id)",
+        return namedParameterJdbcTemplate.update("update authors set name = :name where id = :id",
                 namedParameters);
     }
 

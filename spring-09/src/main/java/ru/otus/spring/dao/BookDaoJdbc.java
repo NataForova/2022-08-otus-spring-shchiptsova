@@ -93,7 +93,7 @@ public class BookDaoJdbc implements BookDao {
         namedParameters.put("author_id", author_id);
         namedParameters.put("genre_id", genre_id);
 
-        return namedParameterJdbcTemplate.update("update books set name = :name, author_id = :author_id, genre_id = :genre_id where id = :id)",
+        return namedParameterJdbcTemplate.update("update books set name = :name, author_id = :author_id, genre_id = :genre_id where id = :id",
                 namedParameters);
     }
 
