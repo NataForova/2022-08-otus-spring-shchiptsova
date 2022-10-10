@@ -37,7 +37,7 @@ public class BooksShellCommand implements ApplicationCommand {
     }
 
     @Override
-    @ShellMethod(value = "Get books by author id", key = {"getByAuthorId", "getBookByAuthorId"})
+    @ShellMethod(value = "Get books by genre id", key = {"getByGenreId", "getBookByGenreId"})
     public String getBookByGenreId(int genreId) {
         return bookService.getBookByGenreId(genreId).toString();
     }
