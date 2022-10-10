@@ -2,53 +2,62 @@ package ru.otus.spring.command;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.spring.dao.BookDao;
-import ru.otus.spring.domain.Book;
+import ru.otus.spring.service.BookService;
 
 @ShellComponent
 public class BooksShellCommand implements ApplicationCommand {
-    //TODO перенести в сервис
-    private final BookDao bookDao;
+    private final BookService bookService;
 
-    public BooksShellCommand(BookDao bookDao) {
-        this.bookDao = bookDao;
+    public BooksShellCommand(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @Override
     @ShellMethod(value = "Count books", key = {"count", "count-book"})
     public int countBooks() {
-        return bookDao.count();
+        return bookService.countBooks();
     }
 
     @Override
     @ShellMethod(value = "Insert book", key = {"i", "insert"})
     public int insertBook(String bookName, int authorId, int genreId) {
-        return bookDao.insert(bookName, authorId, genreId);
+        return bookService.insertBook(bookName, authorId, genreId);
     }
 
     @Override
-    @ShellMethod(value = "Get book", key = {"getBook", "getBook"})
+    @ShellMethod(value = "Get book by id", key = {"getById", "getBookById"})
     public String getBookById(int bookId) {
-        return bookDao.getById(bookId).toString();
+        return bookService.getBookById(bookId).toString();
+    }
+
+    @Override
+    @ShellMethod(value = "Get books by author id", key = {"getByAuthorId", "getBookByAuthorId"})
+    public String getBookByAuthorId(int authorId) {
+        return bookService.getBookAuthorById(authorId).toString();
+    }
+
+    @Override
+    @ShellMethod(value = "Get books by author id", key = {"getByAuthorId", "getBookByAuthorId"})
+    public String getBookByGenreId(int genreId) {
+        return bookService.getBookByGenreId(genreId).toString();
     }
 
     @Override
     @ShellMethod(value = "delete book", key = {"del", "deleteBook"})
     public void deleteBook(int bookId) {
-        bookDao.deleteById(bookId);
+        bookService.deleteBook(bookId);
     }
 
     @Override
     @ShellMethod(value = "get all books", key = {"getAll", "getAllBooks"})
     public String getAllBooks() {
-        return bookDao.getAll().toString();
+        return bookService.getAllBooks().toString();
     }
 
     @Override
     @ShellMethod(value = "update book", key = {"update", "update"})
-    public int updateBook(long id, String name, long author_id, long genre_id){
-        return bookDao.update(id, name, author_id, genre_id);
+    public int updateBook(long id, String name, long author_id, long genre_id) {
+        return bookService.updateBook(id, name, author_id, genre_id);
     }
-
 
 }

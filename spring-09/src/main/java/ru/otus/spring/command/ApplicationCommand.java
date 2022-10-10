@@ -10,6 +10,11 @@ public interface ApplicationCommand {
 
     String getBookById(int bookId);
 
+    String getBookByAuthorId(int authorId);
+
+    String getBookByGenreId(int genreId);
+
+
     void deleteBook(int bookId);
 
     String getAllBooks();

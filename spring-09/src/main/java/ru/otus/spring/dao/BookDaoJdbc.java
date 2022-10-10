@@ -1,8 +1,6 @@
 package ru.otus.spring.dao;
 
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.domain.Author;
@@ -11,6 +9,7 @@ import ru.otus.spring.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +18,10 @@ import java.util.Map;
 public class BookDaoJdbc implements BookDao {
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private final NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 
-    public BookDaoJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate, NamedParameterJdbcOperations namedParameterJdbcOperations) {
+    public BookDaoJdbc(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-        this.namedParameterJdbcOperations = namedParameterJdbcOperations;
     }
 
     @Override
@@ -35,7 +32,7 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public int insert(String bookName, int authorId, int genreId) {
         Map<String, Object> namedParameters = new HashMap<>();
-        namedParameters.put("id", 999);
+        namedParameters.put("id", getLastBookId() + 1);
         namedParameters.put("name", bookName);
         namedParameters.put("author", authorId);
         namedParameters.put("genre", genreId);
@@ -53,6 +50,30 @@ public class BookDaoJdbc implements BookDao {
                         "from books left join authors on books.author_id = authors.id" +
                         " left join genres on books.genre_id=genres.id " +
                         "where books.id = :id",
+                namedParameters, new BookMapper());
+    }
+
+    @Override
+    public List<Book> getByAuthorId(int authorId) {
+        Map<String, Object> namedParameters = new HashMap<>();
+        namedParameters.put("author_id", authorId);
+        return namedParameterJdbcTemplate.query(
+                "select books.id, books.name, author_id, genre_id, authors.name, genres.name " +
+                        "from books left join authors on books.author_id = authors.id" +
+                        " left join genres on books.genre_id=genres.id " +
+                        "where authors.id = :author_id",
+                namedParameters, new BookMapper());
+    }
+
+    @Override
+    public List<Book> getByGenreId(int genreId) {
+        Map<String, Object> namedParameters = new HashMap<>();
+        namedParameters.put("genre_id", genreId);
+        return namedParameterJdbcTemplate.query(
+                "select books.id, books.name, author_id, genre_id, authors.name, genres.name " +
+                        "from books left join authors on books.author_id = authors.id" +
+                        " left join genres on books.genre_id=genres.id " +
+                        "where genres.id = :genre_id",
                 namedParameters, new BookMapper());
     }
 
@@ -83,6 +104,10 @@ public class BookDaoJdbc implements BookDao {
         namedParameterJdbcTemplate.update("delete from books where id = :id", namedParameters);
     }
 
+    private int getLastBookId() {
+        return namedParameterJdbcTemplate.queryForObject("select max(id) from books", new HashMap<>(), Integer.class);
+    }
+
     private static class BookMapper implements RowMapper<Book> {
 
         @Override
@@ -100,4 +125,5 @@ public class BookDaoJdbc implements BookDao {
             return new Book(id, bookName, author, genre);
         }
     }
+
 }
