@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.TestPropertySource;
 import ru.otus.spring.dao.BookDao;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Import(ApplicationTestConfig.class)
-@TestConfiguration(value = "application-test.yml")
 public class BookServiceTest {
 
     private static final int EXPECTED_BOOK_COUNT = 7;
