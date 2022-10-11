@@ -33,7 +33,7 @@ public class BooksShellCommand implements ApplicationCommand {
     @Override
     @ShellMethod(value = "Get books by author id", key = {"getByAuthorId", "getBookByAuthorId"})
     public String getBookByAuthorId(int authorId) {
-        return bookService.getBookAuthorById(authorId).toString();
+        return bookService.getBookByAuthorId(authorId).toString();
     }
 
     @Override
@@ -59,5 +59,4 @@ public class BooksShellCommand implements ApplicationCommand {
     public int updateBook(long id, String name, long author_id, long genre_id) {
         return bookService.updateBook(id, name, author_id, genre_id);
     }
-
 }

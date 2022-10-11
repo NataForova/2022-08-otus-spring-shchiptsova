@@ -42,7 +42,7 @@ public class GenreDaoJdbc implements GenreDao {
         namedParameters.put("id", id);
         return namedParameterJdbcTemplate.queryForObject(
                 "select genres.id, genres.name " +
-                        "from genres where genres.id = :id ",  new HashMap<>(), Genre.class);
+                        "from genres where genres.id = :id ", namedParameters, new GenreMapper());
     }
 
     @Override

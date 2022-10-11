@@ -9,7 +9,6 @@ import ru.otus.spring.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public int insert(String bookName, int authorId, int genreId) {
+    public int insert(String bookName, long authorId, long genreId) {
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("id", getLastBookId() + 1);
         namedParameters.put("name", bookName);
@@ -42,7 +41,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public Book getById(int id) {
+    public Book getById(long id) {
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("id", id);
         return namedParameterJdbcTemplate.queryForObject(
@@ -54,7 +53,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public List<Book> getByAuthorId(int authorId) {
+    public List<Book> getByAuthorId(long authorId) {
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("author_id", authorId);
         return namedParameterJdbcTemplate.query(
@@ -66,7 +65,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public List<Book> getByGenreId(int genreId) {
+    public List<Book> getByGenreId(long genreId) {
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("genre_id", genreId);
         return namedParameterJdbcTemplate.query(

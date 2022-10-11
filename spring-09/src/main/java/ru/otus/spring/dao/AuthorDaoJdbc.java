@@ -42,7 +42,7 @@ public class AuthorDaoJdbc implements AuthorDao {
         namedParameters.put("id", id);
         return namedParameterJdbcTemplate.queryForObject(
                 "select authors.id, authors.name " +
-                        "from authors where authors.id = :id ",  new HashMap<>(), Author.class);
+                        "from authors where authors.id = :id ",  namedParameters, new AuthorMapper());
     }
 
     @Override
