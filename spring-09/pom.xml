@@ -75,7 +75,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.spring.SpringBootApplicationMain</mainClass>
+                            <mainClass>ru.otus.spring.LibraryApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
