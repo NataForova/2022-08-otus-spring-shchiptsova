@@ -51,6 +51,10 @@ public class StudentsTestApplication implements CommandLineRunner {
         if (studentName.isEmpty()) {
             ioQuestionService.printResult(testingAppMessenger.getMessage("ask.name"));
             studentName = ioQuestionService.readStudentName();
+            if (studentName.isEmpty()) {
+                ioQuestionService.printResult(testingAppMessenger.getMessage("no.name"));
+                return;
+            }
         }
         ioQuestionService.printResult(testingAppMessenger.getMessage("greeting", new String[] {studentName}));
 
