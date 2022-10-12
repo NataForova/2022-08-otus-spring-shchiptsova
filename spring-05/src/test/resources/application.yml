@@ -1,0 +1,17 @@
+spring:
+  messages:
+    basename: "i18n/appmessages"
+    encoding: "UTF-8"
+  shell:
+    interactive:
+      enabled: false
+
+questions:
+  resource:
+    file :
+      mask: "questions_*.csv"
+  min:
+    score: 5
+
+application:
+  locale: en
