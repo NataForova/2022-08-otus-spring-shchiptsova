@@ -81,7 +81,7 @@ public class BookDaoJdbc implements BookDao {
         return namedParameterJdbcTemplate.query(
                 "select books.id, books.name, author_id, genre_id, authors.name, genres.name " +
                         "from books left join authors on books.author_id = authors.id" +
-                        " left join genres on books.genre_id=genres.id ",  new HashMap<>(), new BookMapper() );
+                        " left join genres on books.genre_id=genres.id ", new HashMap<>(), new BookMapper());
     }
 
     @Override

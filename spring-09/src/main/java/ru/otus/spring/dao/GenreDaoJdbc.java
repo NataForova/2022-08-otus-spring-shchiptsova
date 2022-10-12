@@ -3,8 +3,6 @@ package ru.otus.spring.dao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring.domain.Author;
-import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 
 import java.sql.ResultSet;
@@ -30,7 +28,7 @@ public class GenreDaoJdbc implements GenreDao {
     public int insert(String genreName) {
         Map<String, Object> namedParameters = new HashMap<>();
         namedParameters.put("id", getLastGenreId() + 1);
-        namedParameters.put("name",genreName);
+        namedParameters.put("name", genreName);
 
         return namedParameterJdbcTemplate.update("insert into genres (id, name) values(:id, :name)",
                 namedParameters);
@@ -49,7 +47,7 @@ public class GenreDaoJdbc implements GenreDao {
     public List<Genre> getAll() {
         return namedParameterJdbcTemplate.query(
                 "select genres.id, genres.name " +
-                        "from genres ",  new HashMap<>(), new GenreMapper());
+                        "from genres ", new HashMap<>(), new GenreMapper());
     }
 
     @Override

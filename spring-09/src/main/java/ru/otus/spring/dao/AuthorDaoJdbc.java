@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.domain.Author;
-import ru.otus.spring.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,14 +41,14 @@ public class AuthorDaoJdbc implements AuthorDao {
         namedParameters.put("id", id);
         return namedParameterJdbcTemplate.queryForObject(
                 "select authors.id, authors.name " +
-                        "from authors where authors.id = :id ",  namedParameters, new AuthorMapper());
+                        "from authors where authors.id = :id ", namedParameters, new AuthorMapper());
     }
 
     @Override
     public List<Author> getAll() {
         return namedParameterJdbcTemplate.query(
                 "select authors.id, authors.name " +
-                        "from authors ",  new HashMap<>(), new AuthorMapper());
+                        "from authors ", new HashMap<>(), new AuthorMapper());
     }
 
     @Override

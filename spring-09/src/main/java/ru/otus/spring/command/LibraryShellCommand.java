@@ -2,14 +2,20 @@ package ru.otus.spring.command;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import ru.otus.spring.service.AuthorService;
 import ru.otus.spring.service.BookService;
+import ru.otus.spring.service.GenreService;
 
 @ShellComponent
-public class BooksShellCommand implements ApplicationCommand {
+public class LibraryShellCommand implements ApplicationCommand {
     private final BookService bookService;
+    private final AuthorService authorService;
+    private final GenreService genreService;
 
-    public BooksShellCommand(BookService bookService) {
+    public LibraryShellCommand(BookService bookService, AuthorService authorService, GenreService genreService) {
         this.bookService = bookService;
+        this.authorService = authorService;
+        this.genreService = genreService;
     }
 
     @Override
@@ -55,8 +61,20 @@ public class BooksShellCommand implements ApplicationCommand {
     }
 
     @Override
-    @ShellMethod(value = "update book", key = {"update", "update"})
+    @ShellMethod(value = "update book", key = {"u", "update"})
     public int updateBook(long id, String name, long author_id, long genre_id) {
         return bookService.updateBook(id, name, author_id, genre_id);
+    }
+
+    @Override
+    @ShellMethod(value = "inset genre", key = {"insertGenre", "insertGenre"})
+    public int insertGenre(String name) {
+        return genreService.insert(name);
+    }
+
+    @Override
+    @ShellMethod(value = "inset author", key = {"insertAuthor", "insertAuthor"})
+    public int insertAuthor(String name) {
+        return authorService.insert(name);
     }
 }
