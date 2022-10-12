@@ -1,7 +1,9 @@
 package ru.otus.spring.service;
 
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
@@ -18,6 +20,7 @@ public class ShellApplicationCommand implements ApplicationCommand {
 
     @Override
     @ShellMethod(value = "Login command", key = {"l", "login"})
+    @ShellMethodAvailability(value = "isPublishEventCommandAvailable")
     public String login(@ShellOption(defaultValue = "John Doe")String userName) {
         this.userName = userName;
         return testingAppMessenger.getMessage("login.name",  new String[] {userName});
@@ -28,5 +31,9 @@ public class ShellApplicationCommand implements ApplicationCommand {
     public String start() {
         studentsTestApplication.run(this.userName);
         return testingAppMessenger.getMessage("good.luck");
+    }
+
+    private Availability isPublishEventCommandAvailable() {
+        return userName == null? Availability.unavailable(testingAppMessenger.getMessage("no.nameK")): Availability.available();
     }
 }
