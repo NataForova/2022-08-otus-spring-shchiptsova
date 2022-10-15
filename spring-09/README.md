@@ -11,3 +11,31 @@
 НЕ делать AbstractDao.  
 НЕ делать наследования в тестах  
 Это домашнее задание является основой для следующих.  
+
+
+>Количество книг в библиотеке :   
+<b>count </b>  
+> 
+>Получить список всех книг:     
+<b>getAll</b>   
+> 
+>Получить список книгу по id:   
+<b>getById _bookId_</b>   
+> 
+>Получить список книг по id автора:  
+<b>getByAuthorId _authorId_</b>   
+> 
+>Получить список книг по id жанра:   
+<b>getByGenreId _genreId_</b>
+> 
+>Добавить книгу :   
+<b>i или insert _bookName authorId genreId_  </b>  
+> 
+>Обновить книгу :   
+<b>u или update _bookId bookName authorId genreId_  </b>  
+> 
+>Добавить автора :   
+<b>insertAuthor _authorName_  </b>  
+> 
+>Добавить жанр :   
+<b>insertGenre _genreName_  </b>  
