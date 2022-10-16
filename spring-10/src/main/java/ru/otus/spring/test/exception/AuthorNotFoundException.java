@@ -1,4 +1,4 @@
-package ru.otus.spring.exception;
+package ru.otus.spring.test.exception;
 
 public class AuthorNotFoundException extends RuntimeException {
     private static final String DEFAULT_MESSAGE = "Library don't have author with such id. \n" +

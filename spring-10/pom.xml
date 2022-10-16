@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -80,7 +80,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.spring.LibraryApp</mainClass>
+                            <mainClass>ru.otus.spring.test.LibraryApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

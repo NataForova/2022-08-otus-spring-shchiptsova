@@ -1,12 +1,12 @@
-package ru.otus.spring.service;
+package ru.otus.spring.test.service;
 
-import ru.otus.spring.domain.Book;
+import ru.otus.spring.test.domain.Book;
 
 import java.util.List;
 
 public interface BookService {
-    int countBooks();
-    int insertBook(String bookName, long authorId, long genreId);
+    long countBooks();
+    Book insertBook(String bookName, long authorId, long genreId);
     Book getBookById(long bookId);
 
     List<Book> getBookByAuthorId(long authorId);
@@ -15,5 +15,5 @@ public interface BookService {
 
     void deleteBook(long bookId);
     List<Book> getAllBooks();
-    int updateBook(long id, String name, long author_id, long genre_id);
+    Book updateBook(long id, String name, long author_id, long genre_id);
 }

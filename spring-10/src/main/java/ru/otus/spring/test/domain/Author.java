@@ -1,4 +1,4 @@
-package ru.otus.spring.domain;
+package ru.otus.spring.test.domain;
 
 import lombok.*;
 
@@ -7,11 +7,12 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "authors")
 @Table(name = "AUTHORS")
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "authorIdGen", sequenceName = "AUTHOR_ID_SEQUENCE", initialValue = 4, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authorIdGen")
     private Long id;
     @Column(name = "name")
     private String name;

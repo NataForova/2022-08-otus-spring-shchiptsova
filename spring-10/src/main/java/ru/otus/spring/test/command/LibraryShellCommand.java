@@ -1,10 +1,10 @@
-package ru.otus.spring.command;
+package ru.otus.spring.test.command;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.spring.service.AuthorService;
-import ru.otus.spring.service.BookService;
-import ru.otus.spring.service.GenreService;
+import ru.otus.spring.test.service.AuthorService;
+import ru.otus.spring.test.service.BookService;
+import ru.otus.spring.test.service.GenreService;
 
 @ShellComponent
 public class LibraryShellCommand implements ApplicationCommand {
@@ -20,14 +20,17 @@ public class LibraryShellCommand implements ApplicationCommand {
 
     @Override
     @ShellMethod(value = "Count books", key = {"count", "count-book"})
-    public int countBooks() {
+    public long countBooks() {
         return bookService.countBooks();
     }
 
     @Override
     @ShellMethod(value = "Insert book", key = {"i", "insert"})
-    public int insertBook(String bookName, int authorId, int genreId) {
-        return bookService.insertBook(bookName, authorId, genreId);
+    public String insertBook(String bookName, int authorId, int genreId) {
+        if (bookService.insertBook(bookName, authorId, genreId) == null) {
+            return "Error during inserting book";
+        }
+        return "Book was inserted";
     }
 
     @Override
@@ -62,19 +65,27 @@ public class LibraryShellCommand implements ApplicationCommand {
 
     @Override
     @ShellMethod(value = "update book", key = {"u", "update"})
-    public int updateBook(long id, String name, long author_id, long genre_id) {
-        return bookService.updateBook(id, name, author_id, genre_id);
+    public String updateBook(long id, String name, long author_id, long genre_id) {
+        if (bookService.updateBook(id, name, author_id, genre_id) == null) {
+            return "Error during updating book";
+        }
+        return "Book was updated";
     }
 
     @Override
     @ShellMethod(value = "inset genre", key = {"insertGenre", "insertGenre"})
-    public int insertGenre(String name) {
-        return genreService.insert(name);
+    public String insertGenre(String name) {
+        if (genreService.insert(name) == null) {
+            return "Error during insert genre";
+        }
+        return "Genre was inserted";
     }
 
     @Override
     @ShellMethod(value = "inset author", key = {"insertAuthor", "insertAuthor"})
-    public int insertAuthor(String name) {
-        return authorService.insert(name);
-    }
+    public String insertAuthor(String name) {
+        if (authorService.insert(name) == null) {
+            return "Error during insert author";
+        }
+        return "Author was inserted";    }
 }

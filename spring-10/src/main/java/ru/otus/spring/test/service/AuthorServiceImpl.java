@@ -1,9 +1,10 @@
-package ru.otus.spring.service;
+package ru.otus.spring.test.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.test.dao.AuthorDao;
+import ru.otus.spring.test.domain.Author;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -14,9 +15,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public int insert(String name) {
+    public Author insert(String name) {
         validateAuthorName(name);
-        return authorDao.insert(name);
+        Author author = new Author();
+        author.setName(name);
+        return authorDao.save(author);
     }
 
     private void validateAuthorName(String authorName) {

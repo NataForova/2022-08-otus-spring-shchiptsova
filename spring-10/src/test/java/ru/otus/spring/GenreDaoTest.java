@@ -1,17 +1,13 @@
-package ru.otus.spring.test;
+package ru.otus.spring;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
-import ru.otus.spring.dao.GenreDao;
-import ru.otus.spring.dao.GenreDaoJdbc;
-import ru.otus.spring.domain.Genre;
+import ru.otus.spring.test.dao.GenreDao;
+import ru.otus.spring.test.dao.GenreDaoJpa;
+import ru.otus.spring.test.domain.Genre;
 
 import java.util.List;
 
@@ -19,12 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-@JdbcTest
-@Import(GenreDaoJdbc.class)
+@DataJpaTest
+@Import(GenreDaoJpa.class)
 public class GenreDaoTest {
 
-    private static final int EXPECTED_GENRE_COUNT = 5;
+    private static final long EXPECTED_GENRE_COUNT = 5L;
     private static final long EXISTING_GENRE_ID = 1L;
     private static final String EXISTING_GENRE_NAME = "Fantasy";
     private static final String NEW_GENRE_NAME = "Fairy tale";
@@ -40,8 +37,9 @@ public class GenreDaoTest {
 
     @Test
     void genreInsertTest() {
-        Genre expectedGenre = new Genre(NEW_GENRE_ID, NEW_GENRE_NAME);
-        genreDao.insert(NEW_GENRE_NAME);
+        Genre expectedGenre = new Genre();
+        expectedGenre.setName(NEW_GENRE_NAME);
+        genreDao.save(expectedGenre);
 
         Genre actualGenre = genreDao.getById(expectedGenre.getId());
         assertThat(actualGenre).usingRecursiveComparison().isEqualTo(actualGenre);
@@ -98,7 +96,6 @@ public class GenreDaoTest {
 
         genreDao.deleteById(EXISTING_GENRE_ID);
 
-        assertThatThrownBy(() -> genreDao.getById(EXISTING_GENRE_ID))
-                .isInstanceOf(EmptyResultDataAccessException.class);
+        assertNull(genreDao.getById(EXISTING_GENRE_ID));
     }
 }

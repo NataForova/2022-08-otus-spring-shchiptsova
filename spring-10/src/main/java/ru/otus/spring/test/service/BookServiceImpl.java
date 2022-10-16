@@ -1,16 +1,19 @@
-package ru.otus.spring.service;
+package ru.otus.spring.test.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.otus.spring.dao.AuthorDao;
-import ru.otus.spring.dao.BookDao;
-import ru.otus.spring.dao.GenreDao;
-import ru.otus.spring.domain.Book;
-import ru.otus.spring.exception.AuthorNotFoundException;
-import ru.otus.spring.exception.GenreNotFoundException;
+import ru.otus.spring.test.dao.AuthorDao;
+import ru.otus.spring.test.dao.BookDao;
+import ru.otus.spring.test.dao.GenreDao;
+import ru.otus.spring.test.domain.Author;
+import ru.otus.spring.test.domain.Book;
+import ru.otus.spring.test.domain.Genre;
+import ru.otus.spring.test.exception.AuthorNotFoundException;
+import ru.otus.spring.test.exception.GenreNotFoundException;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -27,16 +30,21 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int countBooks() {
+    public long countBooks() {
         return bookDao.count();
     }
 
     @Override
-    public int insertBook(String bookName, long authorId, long genreId) {
+    public Book insertBook(String bookName, long authorId, long genreId) {
         validateBookName(bookName);
-        validateAuthorId(authorId);
-        validateGenreId(genreId);
-        return bookDao.insert(bookName, authorId, genreId);
+        Author author =  validateAuthorId(authorId);
+        Genre genre = validateGenreId(genreId);
+        Book book = new Book();
+        book.setName(bookName);
+        book.setGenre(Collections.singletonList(genre));
+        book.setAuthor(Collections.singletonList(author));
+
+        return bookDao.save(book);
     }
 
     @Override
@@ -67,11 +75,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int updateBook(long id, String bookName, long authorId, long genreId) {
+    public Book updateBook(long id, String bookName, long authorId, long genreId) {
         validateBookName(bookName);
-        validateAuthorId(authorId);
-        validateGenreId(genreId);
-        return bookDao.update(id, bookName, authorId, genreId);
+        Author author = validateAuthorId(authorId);
+        Genre genre = validateGenreId(genreId);
+        Book book = new Book(id, bookName, Collections.singletonList(author), Collections.singletonList(genre));
+
+        return bookDao.update(book);
     }
 
     private void validateBookName(String bookName) {
@@ -79,17 +89,17 @@ public class BookServiceImpl implements BookService {
         Assert.isTrue(Strings.isNotEmpty(bookName) || Strings.isNotBlank(bookName), "Book name cannot be empty");
     }
 
-    private void validateAuthorId(long authorId) {
+    private Author validateAuthorId(long authorId) {
         try {
-            authorDao.getById(authorId);
+            return authorDao.getById(authorId);
         } catch (EmptyResultDataAccessException e) {
             throw new AuthorNotFoundException(e);
         }
     }
 
-    private void validateGenreId(long genreId) {
+    private Genre validateGenreId(long genreId) {
         try {
-            genreDao.getById(genreId);
+            return genreDao.getById(genreId);
         } catch (EmptyResultDataAccessException e) {
             throw new GenreNotFoundException(e);
         }

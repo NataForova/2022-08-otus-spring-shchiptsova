@@ -1,9 +1,10 @@
-package ru.otus.spring.service;
+package ru.otus.spring.test.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import ru.otus.spring.dao.GenreDao;
+import ru.otus.spring.test.dao.GenreDao;
+import ru.otus.spring.test.domain.Genre;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -14,9 +15,11 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public int insert(String name) {
+    public Genre insert(String name) {
         validateGenreName(name);
-        return genreDao.insert(name);
+        Genre genre = new Genre();
+        genre.setName(name);
+        return genreDao.save(genre);
     }
 
     private void validateGenreName(String genreName) {
