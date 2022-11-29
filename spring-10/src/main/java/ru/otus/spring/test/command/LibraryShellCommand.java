@@ -4,6 +4,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.test.service.AuthorService;
 import ru.otus.spring.test.service.BookService;
+import ru.otus.spring.test.service.CommentService;
 import ru.otus.spring.test.service.GenreService;
 
 @ShellComponent
@@ -12,10 +13,16 @@ public class LibraryShellCommand implements ApplicationCommand {
     private final AuthorService authorService;
     private final GenreService genreService;
 
-    public LibraryShellCommand(BookService bookService, AuthorService authorService, GenreService genreService) {
+    private final CommentService commentService;
+
+    public LibraryShellCommand(BookService bookService,
+                               AuthorService authorService,
+                               GenreService genreService,
+                               CommentService commentService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.genreService = genreService;
+        this.commentService = commentService;
     }
 
     @Override
@@ -87,5 +94,15 @@ public class LibraryShellCommand implements ApplicationCommand {
         if (authorService.insert(name) == null) {
             return "Error during insert author";
         }
-        return "Author was inserted";    }
+        return "Author was inserted";
+    }
+
+    @Override
+    @ShellMethod(value = "inset comment", key = {"comment", "insetComment"})
+    public String insertComment(String text, long bookId) {
+        if (commentService.insert(text, bookId) == null) {
+            return "Error during insert comment";
+        }
+        return "Comment was inserted";
+    }
 }

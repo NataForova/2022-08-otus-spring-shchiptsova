@@ -13,5 +13,5 @@ public interface ApplicationCommand {
     String updateBook(long id, String name, long author_id, long genre_id);
     String insertGenre(String name);
     String insertAuthor(String name);
-
+    String insertComment(String text, long bookId);
 }

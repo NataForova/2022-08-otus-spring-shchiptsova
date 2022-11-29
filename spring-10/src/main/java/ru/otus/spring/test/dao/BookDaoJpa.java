@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
-@Transactional
 public class BookDaoJpa implements BookDao {
 
     @PersistenceContext
@@ -61,8 +60,8 @@ public class BookDaoJpa implements BookDao {
     @Override
     public List<Book> getByGenreId(long genreId) {
         TypedQuery<Book> query = em.createQuery("select b " +
-                        "from books b " +
-                        "where genres.id= :genreId",
+                        "from books b join fetch  b.genre g " +
+                        "where g.id= :genreId",
                 Book.class);
         query.setParameter("genreId", genreId);
         return query.getResultList();

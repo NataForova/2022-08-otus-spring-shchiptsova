@@ -3,6 +3,7 @@ package ru.otus.spring.test.service;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.otus.spring.test.dao.AuthorDao;
 import ru.otus.spring.test.dao.BookDao;
@@ -35,9 +36,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public Book insertBook(String bookName, long authorId, long genreId) {
         validateBookName(bookName);
-        Author author =  validateAuthorId(authorId);
+        Author author = validateAuthorId(authorId);
         Genre genre = validateGenreId(genreId);
         Book book = new Book();
         book.setName(bookName);
@@ -65,6 +67,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void deleteBook(long bookId) {
         bookDao.deleteById(bookId);
     }
@@ -75,6 +78,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public Book updateBook(long id, String bookName, long authorId, long genreId) {
         validateBookName(bookName);
         Author author = validateAuthorId(authorId);
@@ -90,19 +94,20 @@ public class BookServiceImpl implements BookService {
     }
 
     private Author validateAuthorId(long authorId) {
-        try {
-            return authorDao.getById(authorId);
-        } catch (EmptyResultDataAccessException e) {
-            throw new AuthorNotFoundException(e);
+        Author author = authorDao.getById(authorId);
+        if (author == null) {
+            throw new AuthorNotFoundException();
         }
+        return author;
     }
 
     private Genre validateGenreId(long genreId) {
-        try {
-            return genreDao.getById(genreId);
-        } catch (EmptyResultDataAccessException e) {
-            throw new GenreNotFoundException(e);
+        Genre genre = genreDao.getById(genreId);
+        if (genre == null) {
+            throw new GenreNotFoundException();
         }
+        return genre;
+
     }
 
 }

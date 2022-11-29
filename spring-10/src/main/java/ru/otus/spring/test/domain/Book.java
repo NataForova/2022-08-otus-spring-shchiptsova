@@ -34,13 +34,15 @@ public class Book {
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", author=" + author.toString() +
-                ", genre=" + genre.toString() +
-                "}\n";
+                ", author=" + author +
+                ", genre=" + genre +
+                ", comments=" + comments +
+                '}' + '\n';
     }
 }
