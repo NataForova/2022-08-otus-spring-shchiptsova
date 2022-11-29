@@ -41,8 +41,8 @@ public class BookServiceImpl implements BookService {
         Genre genre = validateGenreId(genreId);
         Book book = new Book();
         book.setName(bookName);
-        book.setGenre(Collections.singletonList(genre));
-        book.setAuthor(Collections.singletonList(author));
+        book.setGenre(genre);
+        book.setAuthor(author);
 
         return bookDao.save(book);
     }
@@ -79,7 +79,7 @@ public class BookServiceImpl implements BookService {
         validateBookName(bookName);
         Author author = validateAuthorId(authorId);
         Genre genre = validateGenreId(genreId);
-        Book book = new Book(id, bookName, Collections.singletonList(author), Collections.singletonList(genre));
+        Book book = new Book(id, bookName, author, genre, Collections.emptyList());
 
         return bookDao.update(book);
     }

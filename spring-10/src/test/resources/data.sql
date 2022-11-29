@@ -30,3 +30,10 @@ insert into BOOKS (id, `name`, author_id, genre_id)
 values (6, 'The Mystery of Edwin Droods', 2, 5);
 insert into BOOKS (id, `name`, author_id, genre_id)
 values (7, 'David Copperfield', 2, 5);
+
+insert into COMMENTS (id, `comment_text`, book_id)
+values (1, 'Good Book', 1);
+insert into COMMENTS (id, `comment_text`, book_id)
+values (2, 'I like it!', 1);
+insert into COMMENTS (id, `comment_text`, book_id)
+values (3, 'I hate it', 2);

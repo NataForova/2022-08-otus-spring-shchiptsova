@@ -3,6 +3,8 @@ package ru.otus.spring.test.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,15 +23,17 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = Author.class, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "author_id")
-    private List<Author> author;
-    @OneToMany(targetEntity = Author.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "genre_id")
-    private List<Genre> genre;
+    private Author author;
 
-    /*@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Comment> comments;*/
+    @OneToOne(targetEntity = Genre.class, cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
+
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "book_id")
+    private List<Comment> comments;
     @Override
     public String toString() {
         return "Book{" +

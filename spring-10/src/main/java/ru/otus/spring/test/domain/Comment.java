@@ -1,6 +1,7 @@
 package ru.otus.spring.test.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,15 +9,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Data
 @Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "commentIdGen", sequenceName = "COMMENT_ID_SEQUENCE", initialValue = 4, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "commentIdGen")
     private long id;
 
-    @ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    Book book;
-
-    @Column(name = "text")
+    @Column(name = "COMMENT_TEXT")
     private String commentText;
 }

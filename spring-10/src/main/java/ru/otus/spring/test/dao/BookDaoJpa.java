@@ -1,20 +1,21 @@
 package ru.otus.spring.test.dao;
 
+import org.hibernate.jpa.QueryHints;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.test.domain.Author;
 import ru.otus.spring.test.domain.Book;
 import ru.otus.spring.test.domain.Genre;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
 @Repository
+@Transactional
 public class BookDaoJpa implements BookDao {
 
     @PersistenceContext
@@ -50,8 +51,8 @@ public class BookDaoJpa implements BookDao {
     @Override
     public List<Book> getByAuthorId(long authorId) {
         TypedQuery<Book> query = em.createQuery("select b " +
-                        "from books b " +
-                        "where authors.id = :authorId",
+                        "from books b join fetch  b.author a " +
+                        "where a.id = :authorId",
                 Book.class);
         query.setParameter("authorId", authorId);
         return query.getResultList();
@@ -69,7 +70,8 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public List<Book> getAll() {
-        return em.createQuery("select a from authors a", Book.class).getResultList();
+        TypedQuery<Book> query = em.createQuery("select b from books b", Book.class);
+        return query.getResultList();
     }
 
     @Override
@@ -79,28 +81,11 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public void deleteById(long id) {
-        Book book = getById(id);
-        if (book != null) {
-            em.remove(book);
-        }
-    }
-
-    private static class BookMapper implements RowMapper<Book> {
-
-        @Override
-        public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String bookName = resultSet.getString("name");
-            long authorId = resultSet.getInt("author_id");
-            String authorName = resultSet.getString("authors.name");
-            long genreId = resultSet.getInt("genre_id");
-            String genreName = resultSet.getString("genres.name");
-
-            Author author = new Author(authorId, authorName);
-            Genre genre = new Genre(genreId, genreName);
-
-            return new Book(id, bookName, Collections.singletonList(author), Collections.singletonList(genre));
-        }
+        Query query = em.createQuery("delete " +
+                "from books b " +
+                "where b.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
 }
