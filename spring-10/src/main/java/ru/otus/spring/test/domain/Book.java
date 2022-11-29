@@ -33,6 +33,7 @@ public class Book {
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "book_id")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments;
 
     @Override
