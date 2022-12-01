@@ -26,7 +26,6 @@ public class AuthorDaoTest {
     private static final int EXPECTED_AUTHOR_COUNT = 3;
     private static final long EXISTING_AUTHOR_ID = 1L;
     private static final String EXISTING_AUTHOR_NAME = "Joanne Rowling";
-    private static final long NEW_AUTHOR_ID = 4L;
     private static final String NEW_AUTHOR_NAME = "Robert Louis Stevenson";
 
     @Autowired

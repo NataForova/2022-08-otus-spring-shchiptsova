@@ -1,5 +1,6 @@
 package ru.otus.spring.test.dao;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.test.domain.Comment;
 import ru.otus.spring.test.domain.Genre;
@@ -9,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 public class CommentDaoJpa implements CommentDao {
 
     @PersistenceContext

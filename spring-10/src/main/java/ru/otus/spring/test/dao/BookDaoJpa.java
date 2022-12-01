@@ -1,5 +1,6 @@
 package ru.otus.spring.test.dao;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.test.domain.Book;
 
@@ -8,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+@Component
 public class BookDaoJpa implements BookDao {
 
     @PersistenceContext

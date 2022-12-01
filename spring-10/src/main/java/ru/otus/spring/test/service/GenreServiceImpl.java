@@ -2,6 +2,7 @@ package ru.otus.spring.test.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.otus.spring.test.dao.GenreDao;
 import ru.otus.spring.test.domain.Genre;
@@ -15,6 +16,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public Genre insert(String name) {
         validateGenreName(name);
         Genre genre = new Genre();
