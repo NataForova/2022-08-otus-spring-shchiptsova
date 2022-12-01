@@ -73,6 +73,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public List<Book> getAllBooks() {
         return bookDao.getAll();
     }

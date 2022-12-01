@@ -1,13 +1,14 @@
 package ru.otus.spring.test.dao;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ru.otus.spring.test.domain.Book;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BookDaoJpa implements BookDao {
@@ -43,7 +44,7 @@ public class BookDaoJpa implements BookDao {
                 "from books b join fetch b.comments c " +
                 "where b.id = :id", Book.class);
         query.setParameter("id", id);
-        return query.getSingleResult();
+        return  Optional.ofNullable(query.getSingleResult()).orElse(null);
     }
 
     @Override
@@ -68,7 +69,9 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public List<Book> getAll() {
+               EntityGraph<?> entityGraph = em.getEntityGraph("book-comments-entity-graph");
         TypedQuery<Book> query = em.createQuery("select b from books b", Book.class);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();
     }
 

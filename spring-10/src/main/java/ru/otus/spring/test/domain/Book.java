@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "books")
 @Table(name = "BOOKS")
+@NamedEntityGraph(name = "book-comments-entity-graph",
+        attributeNodes = {@NamedAttributeNode("comments")})
 public class Book {
 
     @Id
@@ -34,7 +36,6 @@ public class Book {
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "book_id")
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments;
 
     @Override

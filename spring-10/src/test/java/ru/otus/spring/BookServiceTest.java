@@ -13,6 +13,7 @@ import ru.otus.spring.test.exception.AuthorNotFoundException;
 import ru.otus.spring.test.exception.GenreNotFoundException;
 import ru.otus.spring.test.service.BookService;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,8 +103,8 @@ public class BookServiceTest {
 
     @Test
     void getBookByIdWhenIdNotExistTest() {
-        Book book = bookService.getBookById(NOT_EXISTING_ID);
-        assertNull(book);
+        assertThatThrownBy(() -> bookService.getBookById(NOT_EXISTING_ID))
+                .isInstanceOf(NoResultException.class);
     }
 
     @Test
