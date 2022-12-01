@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import ru.otus.spring.test.dao.AuthorDao;
@@ -28,9 +29,11 @@ public class AuthorDaoTest {
     private static final long NEW_AUTHOR_ID = 4L;
     private static final String NEW_AUTHOR_NAME = "Robert Louis Stevenson";
 
-
     @Autowired
     AuthorDao authorDao;
+
+    @Autowired
+    private TestEntityManager em;
 
     @Test
     void authorCountTest() {
@@ -43,8 +46,8 @@ public class AuthorDaoTest {
         expectedAuthor.setName(NEW_AUTHOR_NAME);
         authorDao.save(expectedAuthor);
 
-        Author actualAuthor = authorDao.getById(expectedAuthor.getId());
-        assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(actualAuthor);
+        Author actualAuthor = em.find(Author.class, expectedAuthor.getId());
+        assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(expectedAuthor);
     }
 
     @Test

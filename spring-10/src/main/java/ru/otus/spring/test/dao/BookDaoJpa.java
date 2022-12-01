@@ -1,18 +1,12 @@
 package ru.otus.spring.test.dao;
 
-import org.hibernate.jpa.QueryHints;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.test.domain.Author;
 import ru.otus.spring.test.domain.Book;
-import ru.otus.spring.test.domain.Genre;
 
-import javax.persistence.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
 public class BookDaoJpa implements BookDao {
@@ -29,7 +23,8 @@ public class BookDaoJpa implements BookDao {
     public long count() {
         return em.createQuery("select count(b) " +
                         "from books b",
-                Long.class).getSingleResult();    }
+                Long.class).getSingleResult();
+    }
 
     @Override
     public Book save(Book book) {
@@ -43,8 +38,11 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public Book getById(long id) {
-        Optional<Book> optionalBook = Optional.ofNullable(em.find(Book.class, id));
-        return optionalBook.orElse(null);
+        TypedQuery<Book> query = em.createQuery("select b " +
+                "from books b join fetch b.comments c " +
+                "where b.id = :id", Book.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
@@ -80,11 +78,9 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public void deleteById(long id) {
-        Query query = em.createQuery("delete " +
-                "from books b " +
-                "where b.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Book book = em.find(Book.class, id);
+        if (book != null) {
+            em.remove(book);
+        }
     }
-
 }

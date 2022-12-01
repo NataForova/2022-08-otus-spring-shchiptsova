@@ -20,6 +20,7 @@ public class Book {
     @SequenceGenerator(name = "bookIdGen", sequenceName = "BOOK_ID_SEQUENCE", initialValue = 8, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookIdGen")
     private Long id;
+
     @Column(name = "name")
     private String name;
 
@@ -31,7 +32,7 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "book_id")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments;

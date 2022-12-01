@@ -1,6 +1,6 @@
 package ru.otus.spring.test.exception;
 
-public class GenreNotFoundException extends RuntimeException {
+public class GenreNotFoundException extends CustomRootException {
 
     private static final String DEFAULT_MESSAGE = "Library don't have genre with such id. \n" +
             "First you need to add a genre";

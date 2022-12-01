@@ -53,7 +53,6 @@ public class GenreDaoJpa implements GenreDao {
     }
 
     @Override
-    @Transactional
     public void deleteById(long id) {
         Genre genre = getById(id);
         if (genre != null) {

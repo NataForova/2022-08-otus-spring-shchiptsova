@@ -1,7 +1,5 @@
 package ru.otus.spring;
 
-import lombok.val;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,8 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -63,7 +59,7 @@ public class BookDaoTest {
         expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME));
         bookDao.save(expectedBook);
 
-        Book actualBook = bookDao.getById(expectedBook.getId());
+        Book actualBook = em.find(Book.class, expectedBook.getId());
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(actualBook);
     }
 
@@ -150,7 +146,7 @@ public class BookDaoTest {
         expectedBook.setComments(Collections.emptyList());
         bookDao.update(expectedBook);
 
-        Book actualBook = bookDao.getById(expectedBook.getId());
+        Book actualBook = em.find(Book.class, expectedBook.getId());
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(actualBook);
     }
 
@@ -164,7 +160,7 @@ public class BookDaoTest {
         expectedBook.setComments(Collections.emptyList());
         bookDao.update(expectedBook);
 
-        Book actualBook = bookDao.getById(expectedBook.getId());
+        Book actualBook = em.find(Book.class, expectedBook.getId());
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(actualBook);
     }
 
@@ -177,7 +173,7 @@ public class BookDaoTest {
         expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME));
         expectedBook.setComments(Collections.emptyList());
         bookDao.update(expectedBook);
-        Book actualBook = bookDao.getById(expectedBook.getId());
+        Book actualBook = em.find(Book.class, expectedBook.getId());
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(actualBook);
     }
 
@@ -188,7 +184,7 @@ public class BookDaoTest {
         em.detach(book);
 
         bookDao.deleteById(EXISTING_BOOK_ID);
-        assertNull(bookDao.getById(EXISTING_BOOK_ID));
+        assertNull(em.find(Book.class, EXISTING_BOOK_ID));
     }
 
     @Test

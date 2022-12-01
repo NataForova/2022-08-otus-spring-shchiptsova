@@ -1,5 +1,6 @@
 package ru.otus.spring.test.dao;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.test.domain.Author;
@@ -11,7 +12,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 public class AuthorDaoJpa implements AuthorDao {
 
     @PersistenceContext
@@ -56,7 +57,6 @@ public class AuthorDaoJpa implements AuthorDao {
     }
 
     @Override
-    @Transactional
     public void deleteById(long id) {
         Author author = getById(id);
         if (author != null) {
