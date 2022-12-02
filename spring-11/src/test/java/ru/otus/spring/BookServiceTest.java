@@ -1,9 +1,10 @@
-package ru.otus.spring.test;
+package ru.otus.spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.dao.BookRepository;
 import ru.otus.spring.domain.Author;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
-@Import(ApplicationConfigTest.class)
+@ContextConfiguration(classes = ApplicationConfigTest.class)
 public class BookServiceTest {
 
     private static final int EXPECTED_BOOK_COUNT = 7;
