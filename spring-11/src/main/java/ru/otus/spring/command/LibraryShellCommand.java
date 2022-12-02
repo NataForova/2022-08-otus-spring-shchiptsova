@@ -2,6 +2,7 @@ package ru.otus.spring.command;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.service.AuthorService;
 import ru.otus.spring.service.BookService;
 import ru.otus.spring.service.GenreService;
@@ -42,6 +43,7 @@ public class LibraryShellCommand implements ApplicationCommand {
 
     @Override
     @ShellMethod(value = "Get book by id", key = {"getById", "getBookById"})
+    @Transactional
     public String getBookById(int bookId) {
         return bookService.getBookById(bookId).toString();
     }
@@ -66,6 +68,7 @@ public class LibraryShellCommand implements ApplicationCommand {
 
     @Override
     @ShellMethod(value = "get all books", key = {"getAll", "getAllBooks"})
+    @Transactional
     public String getAllBooks() {
         return bookService.getAllBooks().toString();
     }

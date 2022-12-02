@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookById(long bookId) {
-        return bookRepository.getById(bookId);
+        return bookRepository.findById(bookId).orElse(null);
     }
 
     @Override
@@ -73,6 +73,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }

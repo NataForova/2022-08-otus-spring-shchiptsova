@@ -14,8 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "books")
 @Table(name = "BOOKS")
-@NamedEntityGraph(name = "book-comments-entity-graph",
-        attributeNodes = {@NamedAttributeNode("comments")})
 public class Book {
 
     @Id
@@ -26,15 +24,15 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(targetEntity = Author.class, cascade = {CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @OneToOne(targetEntity = Genre.class, cascade = {CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "book_id")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments;
