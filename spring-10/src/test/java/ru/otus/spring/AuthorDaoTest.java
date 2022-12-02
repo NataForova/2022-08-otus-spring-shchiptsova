@@ -2,14 +2,13 @@ package ru.otus.spring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
-import ru.otus.spring.test.dao.AuthorDao;
-import ru.otus.spring.test.dao.AuthorDaoJpa;
-import ru.otus.spring.test.domain.Author;
+import org.springframework.test.context.ContextConfiguration;
+import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.dao.AuthorDaoJpa;
+import ru.otus.spring.domain.Author;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
+@ContextConfiguration(classes = TestApplicationConfig.class)
 @Import(AuthorDaoJpa.class)
 public class AuthorDaoTest {
 

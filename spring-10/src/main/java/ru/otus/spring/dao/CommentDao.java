@@ -1,7 +1,6 @@
-package ru.otus.spring.test.dao;
+package ru.otus.spring.dao;
 
-import ru.otus.spring.test.domain.Comment;
-import ru.otus.spring.test.domain.Genre;
+import ru.otus.spring.domain.Comment;
 
 import java.util.List;
 

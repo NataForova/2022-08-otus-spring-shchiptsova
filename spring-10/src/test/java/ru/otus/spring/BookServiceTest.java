@@ -4,14 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import ru.otus.spring.test.dao.BookDao;
-import ru.otus.spring.test.domain.Author;
-import ru.otus.spring.test.domain.Book;
-import ru.otus.spring.test.domain.Comment;
-import ru.otus.spring.test.domain.Genre;
-import ru.otus.spring.test.exception.AuthorNotFoundException;
-import ru.otus.spring.test.exception.GenreNotFoundException;
-import ru.otus.spring.test.service.BookService;
+import org.springframework.test.context.ContextConfiguration;
+import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.domain.Author;
+import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Comment;
+import ru.otus.spring.domain.Genre;
+import ru.otus.spring.exception.AuthorNotFoundException;
+import ru.otus.spring.exception.GenreNotFoundException;
+import ru.otus.spring.service.BookService;
 
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
-@Import(TestApplicationConfig.class)
+@ContextConfiguration(classes = TestApplicationConfig.class)
 public class BookServiceTest {
 
     private static final int EXPECTED_BOOK_COUNT = 7;

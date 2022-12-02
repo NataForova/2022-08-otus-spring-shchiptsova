@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import ru.otus.spring.test.dao.BookDao;
-import ru.otus.spring.test.dao.BookDaoJpa;
-import ru.otus.spring.test.domain.Author;
-import ru.otus.spring.test.domain.Book;
-import ru.otus.spring.test.domain.Genre;
+import org.springframework.test.context.ContextConfiguration;
+import ru.otus.spring.dao.BookDao;
+import ru.otus.spring.dao.BookDaoJpa;
+import ru.otus.spring.domain.Author;
+import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Genre;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@ContextConfiguration(classes = TestApplicationConfig.class)
 @Import(BookDaoJpa.class)
 public class BookDaoTest {
     private static final int EXPECTED_BOOK_COUNT = 7;

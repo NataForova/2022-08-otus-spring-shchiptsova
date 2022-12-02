@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
-import ru.otus.spring.test.dao.GenreDao;
-import ru.otus.spring.test.dao.GenreDaoJpa;
-import ru.otus.spring.test.domain.Genre;
+import org.springframework.test.context.ContextConfiguration;
+import ru.otus.spring.dao.GenreDao;
+import ru.otus.spring.dao.GenreDaoJpa;
+import ru.otus.spring.domain.Genre;
 
 import java.util.List;
 
@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
+@ContextConfiguration(classes = TestApplicationConfig.class)
 @Import(GenreDaoJpa.class)
 public class GenreDaoTest {
 

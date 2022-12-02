@@ -1,6 +1,6 @@
-package ru.otus.spring.test.dao;
+package ru.otus.spring.dao;
 
-import ru.otus.spring.test.domain.Author;
+import ru.otus.spring.domain.Author;
 
 import java.util.List;
 

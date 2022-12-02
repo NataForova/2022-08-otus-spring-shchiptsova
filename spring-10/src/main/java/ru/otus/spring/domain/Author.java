@@ -1,4 +1,4 @@
-package ru.otus.spring.test.domain;
+package ru.otus.spring.domain;
 
 import lombok.*;
 

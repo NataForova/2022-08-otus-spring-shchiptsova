@@ -1,4 +1,4 @@
-package ru.otus.spring.test.exception;
+package ru.otus.spring.exception;
 
 public class GenreNotFoundException extends CustomRootException {
 

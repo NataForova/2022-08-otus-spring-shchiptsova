@@ -1,6 +1,4 @@
-package ru.otus.spring.test.command;
-
-import ru.otus.spring.test.domain.Book;
+package ru.otus.spring.command;
 
 public interface ApplicationCommand {
     long countBooks();

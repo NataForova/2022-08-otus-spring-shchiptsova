@@ -1,6 +1,6 @@
-package ru.otus.spring.test.service;
+package ru.otus.spring.service;
 
-import ru.otus.spring.test.domain.Book;
+import ru.otus.spring.domain.Book;
 
 import java.util.List;
 

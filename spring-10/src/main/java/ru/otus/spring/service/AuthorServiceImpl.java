@@ -1,11 +1,11 @@
-package ru.otus.spring.test.service;
+package ru.otus.spring.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import ru.otus.spring.test.dao.AuthorDao;
-import ru.otus.spring.test.domain.Author;
+import ru.otus.spring.dao.AuthorDao;
+import ru.otus.spring.domain.Author;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {

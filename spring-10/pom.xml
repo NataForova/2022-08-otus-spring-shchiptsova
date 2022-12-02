@@ -80,7 +80,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.otus.spring.test.LibraryApp</mainClass>
+                            <mainClass>ru.otus.spring.LibraryApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

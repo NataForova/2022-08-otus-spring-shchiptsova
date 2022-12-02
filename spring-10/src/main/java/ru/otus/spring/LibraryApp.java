@@ -1,4 +1,4 @@
-package ru.otus.spring.test;
+package ru.otus.spring;
 
 import org.h2.tools.Console;
 import org.springframework.boot.SpringApplication;

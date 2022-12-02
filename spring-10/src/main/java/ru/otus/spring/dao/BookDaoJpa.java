@@ -1,7 +1,7 @@
-package ru.otus.spring.test.dao;
+package ru.otus.spring.dao;
 
 import org.springframework.stereotype.Component;
-import ru.otus.spring.test.domain.Book;
+import ru.otus.spring.domain.Book;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
