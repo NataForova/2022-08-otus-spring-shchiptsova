@@ -1,9 +1,10 @@
-package java.ru.otus.spring;
+package ru.otus.spring.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.dao.BookRepository;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
-@Import(TestApplicationConfig.class)
+@Import(ApplicationConfigTest.class)
 public class BookServiceTest {
 
     private static final int EXPECTED_BOOK_COUNT = 7;
@@ -82,6 +83,7 @@ public class BookServiceTest {
     }
 
     @Test
+    @Transactional
     void getBookByIdTest() {
         List<Comment> comments = new ArrayList<>();
         Comment commentOne = new Comment(COMMENT_ONE_EXISTING_ID,
