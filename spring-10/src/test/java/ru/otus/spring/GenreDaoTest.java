@@ -9,10 +9,10 @@ import ru.otus.spring.dao.GenreDao;
 import ru.otus.spring.dao.GenreDaoJpa;
 import ru.otus.spring.domain.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -48,7 +48,7 @@ public class GenreDaoTest {
 
     @Test
     void genreGetByIdTest() {
-        Genre expectedGenre = new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME);
+        Genre expectedGenre = new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME, new ArrayList<>());
         Genre actualGenre = genreDao.getById(expectedGenre.getId());
         assertThat(actualGenre).usingRecursiveComparison().isEqualTo(actualGenre);
     }
@@ -83,7 +83,7 @@ public class GenreDaoTest {
 
     @Test
     void genreUpdateTest() {
-        Genre expectedGenre = new Genre(EXISTING_GENRE_ID, NEW_GENRE_NAME);
+        Genre expectedGenre = new Genre(EXISTING_GENRE_ID, NEW_GENRE_NAME, new ArrayList<>());
         genreDao.update(expectedGenre);
 
         Genre actualGenre = genreDao.getById(expectedGenre.getId());

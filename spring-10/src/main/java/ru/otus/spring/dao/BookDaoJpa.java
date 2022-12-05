@@ -48,26 +48,6 @@ public class BookDaoJpa implements BookDao {
     }
 
     @Override
-    public List<Book> getByAuthorId(long authorId) {
-        TypedQuery<Book> query = em.createQuery("select b " +
-                        "from books b join fetch  b.author a " +
-                        "where a.id = :authorId",
-                Book.class);
-        query.setParameter("authorId", authorId);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Book> getByGenreId(long genreId) {
-        TypedQuery<Book> query = em.createQuery("select b " +
-                        "from books b join fetch  b.genre g " +
-                        "where g.id= :genreId",
-                Book.class);
-        query.setParameter("genreId", genreId);
-        return query.getResultList();
-    }
-
-    @Override
     public List<Book> getAll() {
                EntityGraph<?> entityGraph = em.getEntityGraph("book-comments-entity-graph");
         TypedQuery<Book> query = em.createQuery("select b from books b", Book.class);

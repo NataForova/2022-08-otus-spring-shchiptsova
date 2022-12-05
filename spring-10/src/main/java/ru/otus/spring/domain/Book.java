@@ -24,12 +24,12 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(targetEntity = Author.class, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "author_id")
+    @ManyToOne(targetEntity = Author.class)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
 
-    @OneToOne(targetEntity = Genre.class, cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "genre_id")
+    @ManyToOne(targetEntity = Genre.class)
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genre genre;
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

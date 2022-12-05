@@ -12,6 +12,7 @@ import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,8 +58,8 @@ public class BookDaoTest {
     void bookInsertTest() {
         Book expectedBook = new Book();
         expectedBook.setName(NEW_BOOK_NAME);
-        expectedBook.setAuthor(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME));
-        expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME));
+        expectedBook.setAuthor(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, new ArrayList<>()));
+        expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME, new ArrayList<>()));
         bookDao.save(expectedBook);
 
         Book actualBook = em.find(Book.class, expectedBook.getId());
@@ -68,8 +69,8 @@ public class BookDaoTest {
     @Test
     void bookGetByIdTest() {
         Book expectedBook = new Book(EXISTING_BOOK_ID, EXISTING_BOOK_NAME,
-                new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME),
-               new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME), Collections.emptyList());
+                new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, new ArrayList<>()),
+               new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME, new ArrayList<>()), Collections.emptyList());
         Book actualBook = bookDao.getById(expectedBook.getId());
         assertThat(actualBook).usingRecursiveComparison().isEqualTo(actualBook);
     }
@@ -143,8 +144,8 @@ public class BookDaoTest {
         Book expectedBook = new Book();
         expectedBook.setId(EXISTING_BOOK_ID);
         expectedBook.setName(NEW_BOOK_NAME);
-        expectedBook.setAuthor(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME));
-        expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME));
+        expectedBook.setAuthor(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, new ArrayList<>()));
+        expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME, new ArrayList<>()));
         expectedBook.setComments(Collections.emptyList());
         bookDao.update(expectedBook);
 
@@ -157,8 +158,8 @@ public class BookDaoTest {
         Book expectedBook = new Book();
         expectedBook.setId(EXISTING_BOOK_ID);
         expectedBook.setName(EXISTING_BOOK_NAME);
-        expectedBook.setAuthor(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME));
-        expectedBook.setGenre(new Genre(NEW_GENRE_ID, NEW_GENRE_NAME));
+        expectedBook.setAuthor(new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, new ArrayList<>()));
+        expectedBook.setGenre(new Genre(NEW_GENRE_ID, NEW_GENRE_NAME, new ArrayList<>()));
         expectedBook.setComments(Collections.emptyList());
         bookDao.update(expectedBook);
 
@@ -171,8 +172,8 @@ public class BookDaoTest {
         Book expectedBook = new Book();
         expectedBook.setId(EXISTING_BOOK_ID);
         expectedBook.setName(EXISTING_BOOK_NAME);
-        expectedBook.setAuthor(new Author(NEW_AUTHOR_ID, NEW_AUTHOR_NAME));
-        expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME));
+        expectedBook.setAuthor(new Author(NEW_AUTHOR_ID, NEW_AUTHOR_NAME, new ArrayList<>()));
+        expectedBook.setGenre(new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME, new ArrayList<>()));
         expectedBook.setComments(Collections.emptyList());
         bookDao.update(expectedBook);
         Book actualBook = em.find(Book.class, expectedBook.getId());
@@ -187,11 +188,5 @@ public class BookDaoTest {
 
         bookDao.deleteById(EXISTING_BOOK_ID);
         assertNull(em.find(Book.class, EXISTING_BOOK_ID));
-    }
-
-    @Test
-    void getBookByAuthorIdTest() {
-        List<Book> actualBook = bookDao.getByAuthorId(EXISTING_AUTHOR_ID);
-        assertNotNull(actualBook);
     }
 }

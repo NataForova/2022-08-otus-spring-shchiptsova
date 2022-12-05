@@ -2,9 +2,11 @@ package ru.otus.spring.dao;
 
 import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Author;
+import ru.otus.spring.domain.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +53,13 @@ public class AuthorDaoJpa implements AuthorDao {
     @Override
     public Author update(Author author) {
         return save(author);
+    }
+
+    @Override
+    public List<Book> getBooksByGenreAuthorId(long id) {
+        Query query = em.createQuery("select a.books from authors a where a.id = :id");
+        query.setParameter("id", id);
+        return query.getResultList();
     }
 
     @Override

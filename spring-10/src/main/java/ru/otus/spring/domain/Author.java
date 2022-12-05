@@ -3,6 +3,8 @@ package ru.otus.spring.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +18,10 @@ public class Author {
     private Long id;
     @Column(name = "name")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private List<Book> books = new ArrayList<>();
 
     @Override
     public String toString() {

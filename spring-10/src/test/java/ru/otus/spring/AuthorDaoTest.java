@@ -10,6 +10,7 @@ import ru.otus.spring.dao.AuthorDao;
 import ru.otus.spring.dao.AuthorDaoJpa;
 import ru.otus.spring.domain.Author;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,7 +52,7 @@ public class AuthorDaoTest {
 
     @Test
     void authorGetByIdTest() {
-        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME);
+        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME, new ArrayList<>());
         Author actualAuthor = authorDao.getById(expectedAuthor.getId());
         assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(actualAuthor);
     }
@@ -78,7 +79,7 @@ public class AuthorDaoTest {
 
     @Test
     void authorUpdateTest() {
-        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, NEW_AUTHOR_NAME);
+        Author expectedAuthor = new Author(EXISTING_AUTHOR_ID, NEW_AUTHOR_NAME, new ArrayList<>());
         authorDao.update(expectedAuthor);
 
         Author actualAuthor = authorDao.getById(expectedAuthor.getId());

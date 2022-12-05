@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +22,10 @@ public class Genre {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private List<Book> books = new ArrayList<>();
 
     @Override
     public String toString() {
