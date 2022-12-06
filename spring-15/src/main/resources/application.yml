@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      database: company
+  shell:
+    interactive:
+      enabled: true
+mongock:
+  runner-type: "ApplicationRunner" # default
+  change-logs-scan-package:
+    - ru.otus.spring.mongock.changelog
