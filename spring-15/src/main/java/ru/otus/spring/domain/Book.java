@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Book {
 
     private Genre genre;
 
-    @DocumentReference
+    //@DocumentReference
     private List<Long> comments;
 
     @Override

@@ -35,7 +35,7 @@ public class DatabaseChangelog {
         myCollection.insertOne(doc);
     }
 
-    @ChangeSet(order = "003", id = "insertAuthors", author = "NShchiptsova")
+    @ChangeSet(order = "003", id = "insertGenres", author = "NShchiptsova")
     public void insertGenres(MongoDatabase db) {
         MongoCollection<Document> myCollection = db.getCollection("genres");
         var doc = new Document()
