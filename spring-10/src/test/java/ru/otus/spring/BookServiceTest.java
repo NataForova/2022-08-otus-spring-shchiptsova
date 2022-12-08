@@ -113,6 +113,7 @@ public class BookServiceTest {
     }
 
     @Test
+    @Transactional
     void getBookByAuthorIdTest() {
         List<Book> bookList = bookService.getBookByAuthorId(EXISTING_AUTHOR_ID);
         Book actualBook = bookList.get(0);
@@ -135,6 +136,7 @@ public class BookServiceTest {
     }
 
     @Test
+    @Transactional
     void getBookByGenreIdTest() {
         List<Book> bookList = bookService.getBookByGenreId(EXISTING_GENRE_ID);
         Book actualBook = bookList.get(0);
