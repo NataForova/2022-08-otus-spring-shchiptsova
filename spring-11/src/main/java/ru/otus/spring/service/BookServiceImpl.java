@@ -56,14 +56,22 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getBookByAuthorId(long authorId) {
-        validateAuthorId(authorId);
-        return bookRepository.findAllByAuthor_Id(authorId).orElse(Collections.emptyList());
+        Optional<Author> optionalAuthor = authorRepository.findById(authorId);
+        if (optionalAuthor.isPresent()) {
+            return optionalAuthor.get().getBooks();
+        } else {
+            throw new AuthorNotFoundException();
+        }
     }
 
     @Override
     public List<Book> getBookByGenreId(long genreId) {
-        validateGenreId(genreId);
-        return bookRepository.findAllByGenre_Id(genreId).orElse(Collections.emptyList());
+        Optional<Genre> optionalGenre = genreRepository.findById(genreId);
+        if (optionalGenre.isPresent()) {
+            return optionalGenre.get().getBooks();
+        } else {
+            throw new GenreNotFoundException();
+        }
     }
 
     @Override
