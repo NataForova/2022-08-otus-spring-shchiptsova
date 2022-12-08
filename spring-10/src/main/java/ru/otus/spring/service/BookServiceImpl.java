@@ -56,14 +56,22 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public List<Book> getBookByAuthorId(long authorId) {
-        validateAuthorId(authorId);
-        return authorDao.getById(authorId).getBooks();
+        Author author = authorDao.getById(authorId);
+        if (author != null) {
+            return author.getBooks();
+        } else {
+            throw new AuthorNotFoundException();
+        }
     }
 
     @Override
     public List<Book> getBookByGenreId(long genreId) {
-        validateGenreId(genreId);
-        return genreDao.getById(genreId).getBooks();
+        Genre genre = genreDao.getById(genreId);
+        if (genre != null) {
+            return genre.getBooks();
+        } else {
+            throw new GenreNotFoundException();
+        }
     }
 
     @Override
