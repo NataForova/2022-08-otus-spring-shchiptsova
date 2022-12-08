@@ -56,13 +56,6 @@ public class AuthorDaoJpa implements AuthorDao {
     }
 
     @Override
-    public List<Book> getBooksByGenreAuthorId(long id) {
-        Query query = em.createQuery("select a.books from authors a where a.id = :id");
-        query.setParameter("id", id);
-        return query.getResultList();
-    }
-
-    @Override
     public void deleteById(long id) {
         Author author = getById(id);
         if (author != null) {
