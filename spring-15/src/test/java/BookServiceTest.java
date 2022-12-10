@@ -13,6 +13,7 @@ import ru.otus.spring.exception.GenreNotFoundException;
 import ru.otus.spring.service.BookService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -93,8 +94,8 @@ public class BookServiceTest {
                 COMMENT_TWO_EXISTING_COMMENT);
         comments.add(commentTwo);
         Book expectedBook = new Book(EXISTING_BOOK_ID, EXISTING_BOOK_NAME,
-                new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME,  new ArrayList<>()),
-                new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME, new ArrayList<>()),
+                new Author(EXISTING_AUTHOR_ID, EXISTING_AUTHOR_NAME),
+                new Genre(EXISTING_GENRE_ID, EXISTING_GENRE_NAME),
                 comments);
         Book actualBook = bookService.getBookById(EXISTING_BOOK_ID);
         assertThat(actualBook.getName()).isEqualTo(expectedBook.getName());

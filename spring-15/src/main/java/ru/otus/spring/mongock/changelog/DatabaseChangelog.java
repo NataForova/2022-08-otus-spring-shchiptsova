@@ -9,6 +9,7 @@ import org.bson.Document;
 import ru.otus.spring.dao.BookRepository;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.domain.Comment;
 import ru.otus.spring.domain.Genre;
 
 import java.util.ArrayList;
@@ -64,13 +65,13 @@ public class DatabaseChangelog {
         Book sherlockHolmes = new Book(1L, "Sherlock Holmes",
                 new Author(3L, "Arthur Conan Doyle"),
                 new Genre(4L, "Detective"),
-                Arrays.asList(1L, 2L));
+                Arrays.asList(new Comment(), new Comment()));
         books.add(sherlockHolmes);
 
         Book lostWorld = new Book(2L, "Lost World",
                 new Author(3L, "Arthur Conan Doyle"),
                 new Genre(3L, "Science fiction"),
-                List.of(3L));
+                List.of(new Comment()));
         books.add(lostWorld);
 
         Book harryPotter = new Book(3L, "Harry Potter",
