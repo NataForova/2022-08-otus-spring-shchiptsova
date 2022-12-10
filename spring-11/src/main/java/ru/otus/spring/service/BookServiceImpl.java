@@ -36,7 +36,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public Book insertBook(String bookName, long authorId, long genreId) {
         validateBookName(bookName);
         Author author = validateAuthorId(authorId);
@@ -75,19 +74,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteBook(long bookId) {
         bookRepository.deleteById(bookId);
     }
 
     @Override
-    @Transactional
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Book updateBook(long id, String bookName, long authorId, long genreId) {
         validateBookName(bookName);
         Author author = validateAuthorId(authorId);

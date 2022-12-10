@@ -16,7 +16,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @Transactional
     public Author insert(String name) {
         validateAuthorName(name);
         Author author = new Author();

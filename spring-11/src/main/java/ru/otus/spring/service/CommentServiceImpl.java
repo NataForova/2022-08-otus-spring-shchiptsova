@@ -15,7 +15,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public Comment insert(String text, Long bookId) {
         Comment comment = new Comment();
         comment.setCommentText(text);

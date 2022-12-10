@@ -16,7 +16,6 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    @Transactional
     public Genre insert(String name) {
         validateGenreName(name);
         Genre genre = new Genre();
