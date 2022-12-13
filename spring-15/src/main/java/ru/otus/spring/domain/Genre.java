@@ -15,7 +15,7 @@ import java.util.List;
 @Document(collection = "genres")
 public class Genre {
     @Id
-    private Long id;
+    private String id;
 
     private String name;
 

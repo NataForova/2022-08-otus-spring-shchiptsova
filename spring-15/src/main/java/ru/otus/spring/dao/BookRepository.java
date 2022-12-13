@@ -6,8 +6,8 @@ import ru.otus.spring.domain.Book;
 import java.util.List;
 import java.util.Optional;
 
-public interface BookRepository extends MongoRepository<Book, Long> {
+public interface BookRepository extends MongoRepository<Book, String> {
 
-    Optional<List<Book>> findAllByAuthor_Id(Long authorId);
-    Optional<List<Book>> findAllByGenre_Id(Long genreId);
+    Optional<List<Book>> findAllByAuthor_Id(String authorId);
+    Optional<List<Book>> findAllByGenre_Id(String genreId);
 }

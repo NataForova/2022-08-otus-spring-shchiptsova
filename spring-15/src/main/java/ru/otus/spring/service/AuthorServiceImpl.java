@@ -7,6 +7,8 @@ import org.springframework.util.Assert;
 import ru.otus.spring.dao.AuthorRepository;
 import ru.otus.spring.domain.Author;
 
+import java.util.List;
+
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
@@ -16,12 +18,16 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @Transactional
     public Author insert(String name) {
         validateAuthorName(name);
         Author author = new Author();
         author.setName(name);
         return authorRepository.save(author);
+    }
+
+    @Override
+    public List<Author> getAll() {
+        return authorRepository.findAll();
     }
 
     private void validateAuthorName(String authorName) {

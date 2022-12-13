@@ -13,9 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "comments")
 public class Comment {
     @Id
-    private Long id;
+    private String id;
 
-    private Long bookId;
+    private String bookId;
 
     private String commentText;
 

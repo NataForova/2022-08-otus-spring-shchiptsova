@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 public class LibraryApp {
     public static void main(String[] args) throws Exception {
-        //System.out.println("Авторы в БД:");
         SpringApplication.run(LibraryApp.class);
     }
 }

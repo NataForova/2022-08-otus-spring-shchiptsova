@@ -36,8 +36,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
-    public Book insertBook(String bookName, long authorId, long genreId) {
+    public Book insertBook(String bookName, String authorId, String genreId) {
         validateBookName(bookName);
         Author author = validateAuthorId(authorId);
         Genre genre = validateGenreId(genreId);
@@ -50,37 +49,34 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBookById(long bookId) {
+    public Book getBookById(String bookId) {
         return bookRepository.findById(bookId).orElse(null);
     }
 
     @Override
-    public List<Book> getBookByAuthorId(long authorId) {
+    public List<Book> getBookByAuthorId(String authorId) {
         validateAuthorId(authorId);
         return bookRepository.findAllByAuthor_Id(authorId).orElse(Collections.emptyList());
     }
 
     @Override
-    public List<Book> getBookByGenreId(long genreId) {
+    public List<Book> getBookByGenreId(String genreId) {
         validateGenreId(genreId);
         return bookRepository.findAllByGenre_Id(genreId).orElse(Collections.emptyList());
     }
 
     @Override
-    @Transactional
-    public void deleteBook(long bookId) {
+    public void deleteBook(String bookId) {
         bookRepository.deleteById(bookId);
     }
 
     @Override
-    @Transactional
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @Override
-    @Transactional
-    public Book updateBook(long id, String bookName, long authorId, long genreId) {
+    public Book updateBook(String id, String bookName, String authorId, String genreId) {
         validateBookName(bookName);
         Author author = validateAuthorId(authorId);
         Genre genre = validateGenreId(genreId);
@@ -94,7 +90,7 @@ public class BookServiceImpl implements BookService {
         Assert.isTrue(Strings.isNotEmpty(bookName) || Strings.isNotBlank(bookName), "Book name cannot be empty");
     }
 
-    private Author validateAuthorId(long authorId) {
+    private Author validateAuthorId(String authorId) {
         Optional<Author> author = authorRepository.findById(authorId);
         if (author.isEmpty()) {
             throw new AuthorNotFoundException();
@@ -102,7 +98,7 @@ public class BookServiceImpl implements BookService {
         return author.get();
     }
 
-    private Genre validateGenreId(long genreId) {
+    private Genre validateGenreId(String genreId) {
         Optional<Genre> genre = genreRepository.findById(genreId);
         if (genre.isEmpty()) {
             throw new GenreNotFoundException();

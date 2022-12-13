@@ -7,18 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "author")
+@Document(collection = "authors")
 public class Author {
     @Id
-    private Long id;
+    private String id;
 
     private String name;
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

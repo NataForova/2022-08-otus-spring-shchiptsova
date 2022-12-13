@@ -1,9 +1,11 @@
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring.dao.AuthorRepository;
 import ru.otus.spring.dao.BookRepository;
+import ru.otus.spring.dao.GenreRepository;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Comment;
@@ -13,7 +15,6 @@ import ru.otus.spring.exception.GenreNotFoundException;
 import ru.otus.spring.service.BookService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,33 +27,38 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class BookServiceTest {
 
     private static final int EXPECTED_BOOK_COUNT = 7;
-    private static final long EXISTING_BOOK_ID = 1L;
+    private static final String EXISTING_BOOK_ID = "1";
     private static final String EXISTING_BOOK_NAME = "Sherlock Holmes";
 
-    private static final long EXISTING_GENRE_ID = 4L;
+    private static final String EXISTING_GENRE_ID = "4";
     private static final String EXISTING_GENRE_NAME = "Detective";
 
-    private static final long EXISTING_AUTHOR_ID = 3L;
+    private static final String EXISTING_AUTHOR_ID = "3";
     private static final String EXISTING_AUTHOR_NAME = "Arthur Conan Doyle";
 
-    private static final long NEW_BOOK_ID = 4L;
+    private static final String NEW_BOOK_ID = "4";
     private static final String NEW_BOOK_NAME = "The Valley of Fear";
 
-    private static final long NEW_GENRE_ID = 5L;
+    private static final String NEW_GENRE_ID = "5";
     private static final String NEW_GENRE_NAME = "Novel";
 
-    private static final long NEW_AUTHOR_ID = 1L;
+    private static final String NEW_AUTHOR_ID = "1";
     private static final String NEW_AUTHOR_NAME = "Joanne Rowling";
 
-    private static final long NOT_EXISTING_ID = 99L;
-
-    private static final long COMMENT_ONE_EXISTING_ID = 1L;
-    private static final long COMMENT_TWO_EXISTING_ID = 2L;
+    private static final String NOT_EXISTING_ID = "99";
+    private static final String COMMENT_ONE_EXISTING_ID = "1";
+    private static final String COMMENT_TWO_EXISTING_ID = "2";
 
     private static final String COMMENT_ONE_EXISTING_COMMENT = "Good Book";
     private static final String COMMENT_TWO_EXISTING_COMMENT = "I like it!";
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    GenreRepository genreRepository;
+
+    @Autowired
+    AuthorRepository authorRepository;
 
     @Autowired
     BookService bookService;
@@ -82,14 +88,13 @@ public class BookServiceTest {
     }
 
     @Test
-    @Transactional
     void getBookByIdTest() {
         List<Comment> comments = new ArrayList<>();
-        Comment commentOne = new Comment(COMMENT_ONE_EXISTING_ID,
+        Comment commentOne = new Comment(ObjectId.get().toHexString(),
                 EXISTING_BOOK_ID,
                 COMMENT_ONE_EXISTING_COMMENT);
         comments.add(commentOne);
-        Comment commentTwo = new Comment(COMMENT_TWO_EXISTING_ID,
+        Comment commentTwo = new Comment(ObjectId.get().toHexString(),
                 EXISTING_BOOK_ID,
                 COMMENT_TWO_EXISTING_COMMENT);
         comments.add(commentTwo);
@@ -113,13 +118,13 @@ public class BookServiceTest {
     void getBookByAuthorIdTest() {
         List<Book> bookList = bookService.getBookByAuthorId(EXISTING_AUTHOR_ID);
         Book actualBook = bookList.get(0);
-        assertEquals(1, actualBook.getId());
+        assertEquals("1", actualBook.getId());
         assertEquals("Sherlock Holmes", actualBook.getName());
         assertEquals("Arthur Conan Doyle", actualBook.getAuthor().getName());
         assertEquals("Detective", actualBook.getGenre().getName());
 
         actualBook = bookList.get(1);
-        assertEquals(2, actualBook.getId());
+        assertEquals("2", actualBook.getId());
         assertEquals("Lost World", actualBook.getName());
         assertEquals("Arthur Conan Doyle", actualBook.getAuthor().getName());
         assertEquals("Science fiction", actualBook.getGenre().getName());
@@ -135,7 +140,7 @@ public class BookServiceTest {
     void getBookByGenreIdTest() {
         List<Book> bookList = bookService.getBookByGenreId(EXISTING_GENRE_ID);
         Book actualBook = bookList.get(0);
-        assertEquals(1, actualBook.getId());
+        assertEquals("1", actualBook.getId());
         assertEquals("Sherlock Holmes", actualBook.getName());
         assertEquals("Arthur Conan Doyle", actualBook.getAuthor().getName());
         assertEquals("Detective", actualBook.getGenre().getName());

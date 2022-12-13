@@ -7,6 +7,8 @@ import org.springframework.util.Assert;
 import ru.otus.spring.dao.GenreRepository;
 import ru.otus.spring.domain.Genre;
 
+import java.util.List;
+
 @Service
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
@@ -16,12 +18,16 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    @Transactional
     public Genre insert(String name) {
         validateGenreName(name);
         Genre genre = new Genre();
         genre.setName(name);
         return genreRepository.save(genre);
+    }
+
+    @Override
+    public List<Genre> getAll() {
+        return genreRepository.findAll();
     }
 
     private void validateGenreName(String genreName) {
