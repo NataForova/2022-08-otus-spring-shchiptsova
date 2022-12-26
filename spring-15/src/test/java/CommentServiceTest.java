@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -7,13 +10,16 @@ import ru.otus.spring.domain.Comment;
 import ru.otus.spring.service.BookService;
 import ru.otus.spring.service.CommentService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = ApplicationConfigTest.class)
 public class CommentServiceTest {
 
@@ -23,7 +29,7 @@ public class CommentServiceTest {
     @Autowired
     CommentService commentService;
 
-    @Autowired
+    @Mock
     CommentRepository commentRepository;
 
     @Test
@@ -48,11 +54,16 @@ public class CommentServiceTest {
 
     @Test
     void updateCommentTestWhenAllRight() {
+        given(commentRepository.findAll())
+                .willReturn(Collections.singletonList(new Comment("1", "1", "Good book")));
         List<Comment> comments = commentRepository.findAll();
+
         Comment comment = comments.get(0);
         String commentId = comment.getId();
         commentService.update(commentId, NEW_COMMENT_TEXT);
 
+        given(commentRepository.findById("1"))
+                .willReturn(Optional.of(new Comment("1", "1", "The most important book")));
         Optional<Comment> editedCommentOptional = commentRepository.findById(commentId);
 
         assertThat(editedCommentOptional.isPresent()).isTrue();

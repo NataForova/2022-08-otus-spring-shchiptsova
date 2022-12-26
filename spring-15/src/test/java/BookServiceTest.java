@@ -1,7 +1,11 @@
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import ru.otus.spring.dao.AuthorRepository;
 import ru.otus.spring.dao.BookRepository;
@@ -23,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = ApplicationConfigTest.class)
 public class BookServiceTest {
 
@@ -51,15 +56,8 @@ public class BookServiceTest {
 
     private static final String COMMENT_ONE_EXISTING_COMMENT = "Good Book";
     private static final String COMMENT_TWO_EXISTING_COMMENT = "I like it!";
-    @Autowired
+    @Mock
     BookRepository bookRepository;
-
-    @Autowired
-    GenreRepository genreRepository;
-
-    @Autowired
-    AuthorRepository authorRepository;
-
     @Autowired
     BookService bookService;
 
