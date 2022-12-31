@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      database: company
+  shell:
+    interactive:
+      enabled: false
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - ru.otus.spring.mongock.changelog
