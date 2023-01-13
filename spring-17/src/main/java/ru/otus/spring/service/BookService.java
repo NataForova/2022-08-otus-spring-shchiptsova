@@ -1,6 +1,7 @@
 package ru.otus.spring.service;
 
 import ru.otus.spring.domain.Book;
+import ru.otus.spring.rest.dto.AvailableAuthorsAndGenres;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ public interface BookService {
     List<Book> getBookByGenreId(long genreId);
 
     void deleteBook(long bookId);
+
+    void deleteBooks(List<Long> bookIds);
     List<Book> getAllBooks();
     Book updateBook(long id, String name, long author_id, long genre_id);
+    AvailableAuthorsAndGenres getAvailableVariations();
 }

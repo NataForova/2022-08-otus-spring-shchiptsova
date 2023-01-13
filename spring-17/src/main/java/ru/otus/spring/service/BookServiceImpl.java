@@ -2,7 +2,6 @@ package ru.otus.spring.service;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.otus.spring.dao.AuthorRepository;
 import ru.otus.spring.dao.BookRepository;
@@ -10,8 +9,9 @@ import ru.otus.spring.dao.GenreRepository;
 import ru.otus.spring.domain.Author;
 import ru.otus.spring.domain.Book;
 import ru.otus.spring.domain.Genre;
-import ru.otus.spring.exception.GenreNotFoundException;
 import ru.otus.spring.exception.AuthorNotFoundException;
+import ru.otus.spring.exception.GenreNotFoundException;
+import ru.otus.spring.rest.dto.AvailableAuthorsAndGenres;
 
 import java.util.Collections;
 import java.util.List;
@@ -79,6 +79,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void deleteBooks(List<Long> bookIds) {
+        if (bookIds != null) {
+            for (Long bookId : bookIds) {
+                deleteBook(bookId);
+            }
+        }
+    }
+
+    @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
@@ -91,6 +100,13 @@ public class BookServiceImpl implements BookService {
         Book book = new Book(id, bookName, author, genre, Collections.emptyList());
 
         return bookRepository.save(book);
+    }
+
+    @Override
+    public AvailableAuthorsAndGenres getAvailableVariations() {
+        List<Author> authors = authorRepository.findAll();
+        List<Genre> genres = genreRepository.findAll();
+        return new AvailableAuthorsAndGenres(authors, genres);
     }
 
     private void validateBookName(String bookName) {
